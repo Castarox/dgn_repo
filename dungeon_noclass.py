@@ -63,6 +63,7 @@ def move(step, position, boardxy):
         if boardxy[position[0]][position[1]+1] == "X":
             return position
         else:
+            game_or_not(position[0], position[1]+1, boardxy)
             boardxy[position[0]][position[1]] = "."
             position[1] += 1
 
@@ -70,18 +71,21 @@ def move(step, position, boardxy):
         if boardxy[position[0]][position[1]-1] == "X":
             return position
         else:
+            game_or_not(position[0], position[1]-1, boardxy)
             boardxy[position[0]][position[1]] = "."
             position[1] -= 1
     if step == "w": #move up
         if boardxy[position[0]-1][position[1]] == "X":
             return position
         else:
+            game_or_not(position[0]-1, position[1], boardxy)
             boardxy[position[0]][position[1]] = "."
             position[0] -= 1
     if step == "s": #move down
         if boardxy[position[0]+1][position[1]] == "X":
             return position
         else:
+            game_or_not(position[0]+1, position[1], boardxy)
             boardxy[position[0]][position[1]] = "."
             position[0] += 1
 
