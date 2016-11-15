@@ -1,5 +1,5 @@
 import sys, tty, termios, os, random
-
+from kamil import *
 
 class user_class:
     def __init__(self):
@@ -48,6 +48,7 @@ def drukowanie_tablicy(lista):
 def move(user_input):
     if user_input == 'a':
         player.column -= 1
+        game_or_not(player.row, player.column, player.map)
         if player.map[player.row][player.column] == '.':
             player.map[player.row][player.column] = '@'
             player.map[player.row][player.column+1] = '.'
@@ -55,20 +56,23 @@ def move(user_input):
             player.column +=1
     elif user_input == 'd':
         player.column += 1
+        game_or_not(player.row, player.column, player.map)
         if player.map[player.row][player.column] == '.':
             player.map[player.row][player.column] = '@'
             player.map[player.row][player.column-1] = '.'
         else:
             player.column -= 1
     elif user_input == 'w':
-        player.row -= 1 
+        player.row -= 1
+        game_or_not(player.row, player.column, player.map)
         if player.map[player.row][player.column] == '.':
             player.map[player.row][player.column] = '@'
             player.map[player.row+1][player.column] = '.'
         else:
             player.row += 1
     elif user_input == 's':
-        player.row += 1 
+        player.row += 1
+        game_or_not(player.row, player.column, player.map) 
         if player.map[player.row][player.column] == '.':
             player.map[player.row][player.column] = '@'
             player.map[player.row-1][player.column] = '.'
@@ -76,7 +80,6 @@ def move(user_input):
             player.row -= 1
     else:
         sys.exit()
-
 
 def random_item():
     i = 0

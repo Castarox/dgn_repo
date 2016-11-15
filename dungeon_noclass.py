@@ -1,5 +1,7 @@
 import os
 import random
+from kamil import *
+
 
 def getch():
     """Reads one character without enter"""
@@ -109,6 +111,7 @@ def main ():
     start_board = hero_position(hero, start_board)
     start_board = obstacle(start_board)
     start_board = random_item(start_board)
+    doors(23, 80, start_board)
     print_board(start_board)
     game_board = start_board[:]
     #print(id(game_board), id(start_board))
