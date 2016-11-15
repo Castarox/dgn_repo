@@ -109,18 +109,16 @@ def random_item(boardxy, items_position):
 def main ():
 
 
+    loot = []
     items_position = []
-    start_game.start()
     hero = [12, 1]
     start_board = []
     start_board = board(start_board)
     start_board = hero_position(hero, start_board)
     start_board = obstacle(start_board)
     start_board = random_item(start_board, items_position)
-    doors(23, 80, start_board)
     print_board(start_board)
     game_board = start_board[:]
-    #print(id(game_board), id(start_board))
 
     while True:
         os.system('clear')
@@ -130,7 +128,9 @@ def main ():
         hero_position(hero, game_board)
         if hero in items_position:
             what = items_position.index(hero)
-            find_object(what)
+            found = find_object(what)
+            loot = add_to_inventory(found, loot)
+
         if y == "\\":
             exit()
 
