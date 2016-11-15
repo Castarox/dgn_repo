@@ -1,6 +1,7 @@
 import os
 import random
 
+
 def getch():
     """Reads one character without enter"""
     import sys, tty, termios
@@ -36,11 +37,11 @@ def board(boardxy, x = 23, y = 80):
 
 
 def obstacle(board_obst, amount=10, size=8):
-
+    """Prints random obstacles on board"""
     disper = 7
     yy = 2
     for n in range(amount):
-        rock_x = random.randint(4,23 - size)
+        rock_x = random.randint(4,22 - size)
         rock_y = random.randint(yy, disper)
         ran_size = random.randint(4, size)
         for n in range(ran_size):
@@ -100,9 +101,9 @@ def random_item(boardxy):
             break
     return boardxy
 
-
 def main ():
 
+    items_position = []
     hero = [12, 1]
     start_board = []
     start_board = board(start_board)
