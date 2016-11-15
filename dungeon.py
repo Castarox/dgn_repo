@@ -46,10 +46,10 @@ def drukowanie_tablicy(lista):
     for i in lista:
         print(''.join(i))
 
-def move(user_input):
+def move(user_input, door_pass):
     if user_input == 'a':
         player.column -= 1
-        game_or_not(player.row, player.column, player.map)
+        game_or_not(player.row, player.column, player.map, door_pass)
         if player.map[player.row][player.column] == '.':
             player.map[player.row][player.column] = '@'
             player.map[player.row][player.column+1] = '.'
@@ -57,7 +57,7 @@ def move(user_input):
             player.column +=1
     elif user_input == 'd':
         player.column += 1
-        game_or_not(player.row, player.column, player.map)
+        game_or_not(player.row, player.column, player.map, door_pass)
         if player.map[player.row][player.column] == '.':
             player.map[player.row][player.column] = '@'
             player.map[player.row][player.column-1] = '.'
@@ -65,7 +65,7 @@ def move(user_input):
             player.column -= 1
     elif user_input == 'w':
         player.row -= 1
-        game_or_not(player.row, player.column, player.map)
+        game_or_not(player.row, player.column, player.map, door_pass)
         if player.map[player.row][player.column] == '.':
             player.map[player.row][player.column] = '@'
             player.map[player.row+1][player.column] = '.'
@@ -73,7 +73,7 @@ def move(user_input):
             player.row += 1
     elif user_input == 's':
         player.row += 1
-        game_or_not(player.row, player.column, player.map) 
+        game_or_not(player.row, player.column, player.map, door_pass) 
         if player.map[player.row][player.column] == '.':
             player.map[player.row][player.column] = '@'
             player.map[player.row-1][player.column] = '.'
@@ -96,18 +96,21 @@ def random_item():
             break
 
 def main():
+    door_pass = random.randrange(1,4)
     start_game.start()
     start = getch()
     if start:
         os.system('clear')
     player.map = tablica()
     random_item()
+    doors(20, 60, player.map)
     drukowanie_tablicy(player.map)
     while True:
         user_input = getch()
-        move(user_input)
+        move(user_input, door_pass)
         os.system('clear')
         drukowanie_tablicy(player.map)
+        print(door_pass)
     
     
 

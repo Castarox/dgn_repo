@@ -61,12 +61,11 @@ def hero_position(position, boardxy):
 
 
 def move(step, position, boardxy, door_pass):
-    print(door_pass)
     if step == "d": #move right
         if boardxy[position[0]][position[1]+1] == "X":
             return position
         else:
-            game_or_not(position[0], position[1]+1, boardxy, 2)
+            game_or_not(position[0], position[1]+1, boardxy, '2')
             boardxy[position[0]][position[1]] = "."
             position[1] += 1
 
@@ -74,21 +73,21 @@ def move(step, position, boardxy, door_pass):
         if boardxy[position[0]][position[1]-1] == "X":
             return position
         else:
-            game_or_not(position[0], position[1]-1, boardxy, 2)
+            game_or_not(position[0], position[1]-1, boardxy, '2')
             boardxy[position[0]][position[1]] = "."
             position[1] -= 1
     if step == "w": #move up
         if boardxy[position[0]-1][position[1]] == "X":
             return position
         else:
-            game_or_not(position[0]-1, position[1], boardxy, 2)
+            game_or_not(position[0]-1, position[1], boardxy, '2')
             boardxy[position[0]][position[1]] = "."
             position[0] -= 1
     if step == "s": #move down
         if boardxy[position[0]+1][position[1]] == "X":
             return position
         else:
-            game_or_not(position[0]+1, position[1], boardxy, 2)
+            game_or_not(position[0]+1, position[1], boardxy, '2')
             boardxy[position[0]][position[1]] = "."
             position[0] += 1
 
@@ -124,7 +123,7 @@ def create_level():
     print_board(start_board)
     game_board = start_board[:]
     while True:
-        os.system('clear')
+        # os.system('clear')
         print_board(game_board)
         y = getch()
         hero = move(y, hero, game_board, door_pass)
