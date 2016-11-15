@@ -1,10 +1,6 @@
 import os
 import random
-from kamil import *
 import start_game
-from dun_pati import *
-
-
 
 def getch():
     """Reads one character without enter"""
@@ -41,11 +37,11 @@ def board(boardxy, x = 23, y = 80):
 
 
 def obstacle(board_obst, amount=10, size=8):
-    """Prints random obstacles on board"""
+
     disper = 7
     yy = 2
     for n in range(amount):
-        rock_x = random.randint(4,22 - size)
+        rock_x = random.randint(4,23 - size)
         rock_y = random.randint(yy, disper)
         ran_size = random.randint(4, size)
         for n in range(ran_size):
@@ -91,36 +87,33 @@ def move(step, position, boardxy):
     return position
 
 
-def random_item(boardxy, items_position):
+def random_item(boardxy):
     i = 0
     count = 1
     items = ['a','b','c','d','e']
     while True:
         x = random.randrange(19)
-        y = random.randrange(78)
+        y = random.randrange(59)
         if boardxy[x][y] == '.':
             boardxy[x][y] = items[i]
-            items_position.append([x, y])
             i += 1
         if i == 5:
             break
     return boardxy
 
+
 def main ():
 
-
-    items_position = []
-    start_game.start()
     hero = [12, 1]
     start_board = []
     start_board = board(start_board)
     start_board = hero_position(hero, start_board)
     start_board = obstacle(start_board)
-    start_board = random_item(start_board, items_position)
-    doors(23, 80, start_board)
+    start_board = random_item(start_board)
     print_board(start_board)
     game_board = start_board[:]
     #print(id(game_board), id(start_board))
+    start_game.
 
     while True:
         os.system('clear')
@@ -128,9 +121,6 @@ def main ():
         y = getch()
         hero = move(y, hero, game_board)
         hero_position(hero, game_board)
-        if hero in items_position:
-            what = items_position.index(hero)
-            find_object(what)
         if y == "\\":
             exit()
 
