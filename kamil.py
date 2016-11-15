@@ -22,12 +22,10 @@ def doors(row, column, board):
 
 
 def game_or_not(row, column, map, door_pass):
-    print(map[row][column])
-    print(door_pass)
-    if map[row][column] == str(door_pass):
+    if map[row][column] == door_pass:
         print('level pass')
         return 'level pass'
-    elif map[row][column] == 1 or map[row][column] == 3 :
+    elif map[row][column] != '.':
         os.system('clear')
         game.main()
 
