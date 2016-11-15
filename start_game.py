@@ -11,6 +11,7 @@ def start():
 		command = input('Enter command :')
 		if command == '1':
 			print('Startujemy')
+			break
 		elif command == '2':
 			credits()
 		elif command == '3':
