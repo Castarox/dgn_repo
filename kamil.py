@@ -21,11 +21,13 @@ def doors(row, column, board):
         door_number += 1
 
 
-def game_or_not(row, column, map):
-    x = random.randrange(1,4)
-    if map[row][column] != '.' and map[row][column] == x:
+def game_or_not(row, column, map, door_pass):
+    print(map[row][column])
+    print(door_pass)
+    if map[row][column] == str(door_pass):
+        print('level pass')
         return 'level pass'
-    elif map[row][column] != '.' and:
+    elif map[row][column] == 1 or map[row][column] == 3 :
         os.system('clear')
         game.main()
 
