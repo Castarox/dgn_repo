@@ -1,6 +1,7 @@
 import os
 import random
 from kamil import *
+import start_game
 
 
 def getch():
@@ -104,7 +105,7 @@ def random_item(boardxy):
 
 
 def main ():
-
+    start_game.start()
     hero = [12, 1]
     start_board = []
     start_board = board(start_board)
