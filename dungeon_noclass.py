@@ -1,4 +1,5 @@
 import os
+import random
 
 def getch():
     """Reads one character without enter"""
@@ -35,7 +36,7 @@ def board(boardxy, x = 23, y = 80):
 
 
 def obstacle(board_obst, amount=10, size=8):
-    import random
+
     disper = 7
     yy = 2
     for n in range(amount):
@@ -85,6 +86,21 @@ def move(step, position, boardxy):
     return position
 
 
+def random_item(boardxy):
+    i = 0
+    count = 1
+    items = ['a','b','c','d','e']
+    while True:
+        x = random.randrange(19)
+        y = random.randrange(59)
+        if boardxy[x][y] == '.':
+            boardxy[x][y] = items[i]
+            i += 1
+        if i == 5:
+            break
+    return boardxy
+
+
 def main ():
 
     hero = [12, 1]
@@ -92,6 +108,7 @@ def main ():
     start_board = board(start_board)
     start_board = hero_position(hero, start_board)
     start_board = obstacle(start_board)
+    start_board = random_item(start_board)
     print_board(start_board)
     game_board = start_board[:]
     #print(id(game_board), id(start_board))
