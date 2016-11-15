@@ -10,7 +10,6 @@ def start():
 	while True:
 		command = input('Enter command :')
 		if command == '1':
-			print('Startujemy')
 			break
 		elif command == '2':
 			credits()
@@ -47,5 +46,3 @@ def display_menu():
 	print('Credits press 2')
 	print('Help press 3')
 	print('Quit game press 4')
-
-start()
