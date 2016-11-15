@@ -1,8 +1,6 @@
 import os
 import random
-from kamil import *
 import start_game
-
 
 def getch():
     """Reads one character without enter"""
@@ -64,7 +62,6 @@ def move(step, position, boardxy):
         if boardxy[position[0]][position[1]+1] == "X":
             return position
         else:
-            game_or_not(position[0], position[1]+1, boardxy)
             boardxy[position[0]][position[1]] = "."
             position[1] += 1
 
@@ -72,21 +69,18 @@ def move(step, position, boardxy):
         if boardxy[position[0]][position[1]-1] == "X":
             return position
         else:
-            game_or_not(position[0], position[1]-1, boardxy)
             boardxy[position[0]][position[1]] = "."
             position[1] -= 1
     if step == "w": #move up
         if boardxy[position[0]-1][position[1]] == "X":
             return position
         else:
-            game_or_not(position[0]-1, position[1], boardxy)
             boardxy[position[0]][position[1]] = "."
             position[0] -= 1
     if step == "s": #move down
         if boardxy[position[0]+1][position[1]] == "X":
             return position
         else:
-            game_or_not(position[0]+1, position[1], boardxy)
             boardxy[position[0]][position[1]] = "."
             position[0] += 1
 
@@ -109,17 +103,17 @@ def random_item(boardxy):
 
 
 def main ():
-    start_game.start()
+
     hero = [12, 1]
     start_board = []
     start_board = board(start_board)
     start_board = hero_position(hero, start_board)
     start_board = obstacle(start_board)
     start_board = random_item(start_board)
-    doors(23, 80, start_board)
     print_board(start_board)
     game_board = start_board[:]
     #print(id(game_board), id(start_board))
+    start_game.
 
     while True:
         os.system('clear')

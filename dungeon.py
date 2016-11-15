@@ -1,5 +1,6 @@
 import sys, tty, termios, os, random
 from kamil import *
+import start_game
 
 class user_class:
     def __init__(self):
@@ -95,10 +96,7 @@ def random_item():
             break
 
 def main():
-    print('Welcome to the Dungeon Game')
-    print('Movment: W-up S-down d-left a-right (all other to exit after game start)')
-    print('Game made by: Patrycja Mikulska, Edyta Nowak, Kamil Mika')
-    print('Press anything to start')
+    start_game.start()
     start = getch()
     if start:
         os.system('clear')
