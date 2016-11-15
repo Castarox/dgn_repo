@@ -25,7 +25,7 @@ def game_or_not(row, column, map):
     x = random.randrange(1,4)
     if map[row][column] != '.' and map[row][column] == x:
         return 'level pass'
-    elif map[row][column] != '.':
+    elif map[row][column] != '.' and:
         os.system('clear')
         game.main()
 
