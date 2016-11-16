@@ -51,7 +51,7 @@ def move(step, position, boardxy, door_pass, loot, level):
         if boardxy[position[0]][position[1]+1] == "X":
             return position
         else:
-            status = game_or_not(position[0], position[1]+1, boardxy, '2')
+            status = game_or_not(position[0], position[1]+1, boardxy, door_pass, level)
             boardxy[position[0]][position[1]] = "."
             position[1] += 1
 
@@ -59,25 +59,24 @@ def move(step, position, boardxy, door_pass, loot, level):
         if boardxy[position[0]][position[1]-1] == "X":
             return position
         else:
-            status = game_or_not(position[0], position[1]-1, boardxy, '2')
+            status = game_or_not(position[0], position[1]-1, boardxy, door_pass, level)
             boardxy[position[0]][position[1]] = "."
             position[1] -= 1
     if step == "w": #move up
         if boardxy[position[0]-1][position[1]] == "X":
             return position
         else:
-            status = game_or_not(position[0]-1, position[1], boardxy, '2')
+            status = game_or_not(position[0]-1, position[1], boardxy, door_pass, level)
             boardxy[position[0]][position[1]] = "."
             position[0] -= 1
     if step == "s": #move down
         if boardxy[position[0]+1][position[1]] == "X":
             return position
         else:
-            status = game_or_not(position[0]+1, position[1], boardxy, '2')
+            status = game_or_not(position[0]+1, position[1], boardxy, door_pass, level)
             boardxy[position[0]][position[1]] = "."
             position[0] += 1
     if status == 'level pass':
-
         level += 1
         create_level(level, loot)
 
@@ -101,20 +100,19 @@ def random_item(boardxy, items_position):
     return boardxy
 
 
-
 def create_level(level, loot):
     print(level)
     print('\n\n\n\n\n\n\n\n')
-
     items_position = []
     hero = [12, 1]
     door_pass = random.randrange(1,4)
+    print(door_pass)
     start_board = []
     start_board = board(start_board)
     start_board = hero_position(hero, start_board)
     start_board = obstacle(level, start_board)
     start_board = random_item(start_board, items_position)
-    doors(23,80, start_board)
+    doors(23,80, start_board, level)
     print_board(start_board)
     game_board = start_board[:]
 
