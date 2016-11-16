@@ -1,6 +1,7 @@
 import random, os
 from termcolor import colored
 import game
+import time
 
 def doors(row, column, board, level):
     door_number = 1
@@ -31,8 +32,10 @@ def game_or_not(row, column, map, door_pass, level):
         os.system('clear')
         if level == 1:
             game.main()
+            time.sleep(5)
         elif level == 2:
             rock_paper()
+            time.sleep(5)
 
 
 def rock_paper():

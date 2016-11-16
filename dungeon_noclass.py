@@ -3,7 +3,8 @@ import random
 from kamil import *
 import start_game
 from dun_pati import *
-
+from  termcolor import cprint
+from inventory import *
 
 def getch():
     """Reads one character without enter"""
@@ -18,10 +19,20 @@ def getch():
     return ch
 
 
-def print_board(board):
+def print_board(board,level = 3):
     """Prints board"""
+    print('Akutalny level',level)
     for row in board:
-        print("".join(row))
+        for element in row:
+            if element == '.':
+                print("".join(element),end='')
+            elif element == 'X':
+                cprint("".join(element),'green',end='')
+            elif element == '1' or element == '2' or element == '3':
+                cprint("".join(element), 'red', end='')
+            else:
+                print("".join(element), end='')
+        print('')
 
 
 def board(boardxy, x = 23, y = 80):
@@ -122,8 +133,9 @@ def create_level(level, loot):
     game_board = start_board[:]
 
     while True:
-        # os.system('clear')
-        print_board(game_board)
+        os.system('clear')
+        print_board(game_board,level)
+        display_inventory(loot)
         y = getch()
 
         hero = move(y, hero, game_board, door_pass,loot, level)
@@ -131,7 +143,7 @@ def create_level(level, loot):
         if hero in items_position:
             what = items_position.index(hero)
 
-            found = find_object(what)
+            found = find_object(what, loot)
             items_position.pop(what)
             loot = add_to_inventory(found, loot)
 
@@ -140,7 +152,7 @@ def create_level(level, loot):
 
 def main ():
 
-    loot = []
+    loot = [rope, onion, dagger]
     level = 1
     start_game.start()
     create_level(level, loot)
