@@ -46,34 +46,39 @@ def hero_position(position, boardxy):
 
 
 def move(step, position, boardxy, door_pass, loot, level):
+    door_number = ['1','2','3']
     status = ''
     if step == "d": #move right
         if boardxy[position[0]][position[1]+1] == "X":
             return position
-        else:
+        elif boardxy[position[0]][position[1]+1] in door_number:
             status = game_or_not(position[0], position[1]+1, boardxy, door_pass, level)
+        else:
             boardxy[position[0]][position[1]] = "."
             position[1] += 1
 
     if step == "a": #move left
         if boardxy[position[0]][position[1]-1] == "X":
             return position
-        else:
+        elif boardxy[position[0]][position[1]-1] in door_number:
             status = game_or_not(position[0], position[1]-1, boardxy, door_pass, level)
+        else:
             boardxy[position[0]][position[1]] = "."
             position[1] -= 1
     if step == "w": #move up
         if boardxy[position[0]-1][position[1]] == "X":
             return position
-        else:
+        elif boardxy[position[0]-1][position[1]] in door_number:
             status = game_or_not(position[0]-1, position[1], boardxy, door_pass, level)
+        else:
             boardxy[position[0]][position[1]] = "."
             position[0] -= 1
     if step == "s": #move down
         if boardxy[position[0]+1][position[1]] == "X":
             return position
-        else:
+        elif boardxy[position[0]+1][position[1]] in door_number:
             status = game_or_not(position[0]+1, position[1], boardxy, door_pass, level)
+        else:
             boardxy[position[0]][position[1]] = "."
             position[0] += 1
     if status == 'level pass':

@@ -39,35 +39,50 @@ def rock_paper():
     player_points = 0
     computer_points = 0
     options = ['rock', 'scissors', 'paper']
-    while player_points < 3 or computer_points < 3:
+    victory = 0
+    while True:
         user_choice = input('What you chosse: Rock(1), Scissors(2), Paper(3) ')
-        computer_choice = random.randrange(1,4)
-        computer_choice = str(computer_choice)
-        user_choice = str(user_choice)
-        if user_choice == computer_choice:
-            print('Draw !')
-        elif user_choice == '1' and computer_choice == '2':
-            print('You Win !')
-            player_points += 1
-        elif user_choice == '1' and computer_choice == '3':
-            print ('You Losse')
-            computer_points += 1
-        elif user_choice == '2' and computer_choice == '3':
-            print('You Win !')
-            player_points += 1
-        elif user_choice == '2' and computer_choice == '1':
-            print ('You Losse')
-            computer_points += 1
-        elif user_choice == '3' and computer_choice == '1':
-            print('You Win !')
-            player_points += 1
-        elif user_choice == '3' and computer_choice == '2':
-            print ('You Losse')
-            computer_points += 1
-    if player_points == 3:
-        print('Great you win the game')
+        try:
+            int(user_choice)
+        except ValueError:
+            print('Wrong input')
+        else:
+            if 0<int(user_choice)<4 and user_choice.isdigit(): 
+                computer_choice = random.randrange(1,4)
+                computer_choice = str(computer_choice)
+                user_choice = str(user_choice)
+                if user_choice == computer_choice:
+                    print('Draw !')
+                elif user_choice == '1' and computer_choice == '2':
+                    print('You Win !')
+                    player_points += 1
+                elif user_choice == '1' and computer_choice == '3':
+                    print ('You Losse')
+                    computer_points += 1
+                elif user_choice == '2' and computer_choice == '3':
+                    print('You Win !')
+                    player_points += 1
+                elif user_choice == '2' and computer_choice == '1':
+                    print ('You Losse')
+                    computer_points += 1
+                elif user_choice == '3' and computer_choice == '1':
+                    print('You Win !')
+                    player_points += 1
+                elif user_choice == '3' and computer_choice == '2':
+                    print ('You Losse')
+                    computer_points += 1
+                print(player_points)
+                print(computer_points)
+            else:
+                print('wrong input')
+        if player_points == 3:
+            print('Great you win the game')
+            victory = 1
+            break
+        elif computer_points == 3:
+            print('You losse whole game !!')
+            break
+    if victory == 1:
+        return 'Win'
     else:
-        ('You losse whole game !!')
-
-        
-
+        return 'Losse'
