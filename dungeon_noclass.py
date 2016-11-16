@@ -128,7 +128,7 @@ def create_level(level, loot):
     game_board = start_board[:]
 
     while True:
-        # os.system('clear')
+        os.system('clear')
         print_board(game_board,level)
         display_inventory(loot)
         y = getch()
@@ -138,7 +138,7 @@ def create_level(level, loot):
         if hero in items_position:
             what = items_position.index(hero)
 
-            found = find_object(what)
+            found = find_object(what, loot)
             items_position.pop(what)
             loot = add_to_inventory(found, loot)
 
@@ -147,12 +147,7 @@ def create_level(level, loot):
 
 def main ():
 
-<<<<<<< HEAD
-    loot = []
-
-=======
     loot = [rope, onion, dagger]
->>>>>>> a2fd5734587e482299c8ad53b71f92efb6fd1689
     level = 1
     start_game.start()
     create_level(level, loot)
