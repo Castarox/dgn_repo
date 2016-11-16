@@ -82,7 +82,12 @@ def obstacle(level, board_obst, amount=10, size=8):
                     board_obst[rock_x + n][rock_y - m] = "X"
             disper += 7
             yy += 7
-
-
+    elif level == 3:
+        for n in range(2,79):
+            for m in range(random.randrange(3, 11, 2)): # 0, 1, 2
+                board_obst[m][n] = "X"
+        for n in range(2,79):
+            for m in range(random.randrange(3, 11, 2)):
+                board_obst[22 - m][n] = "X"
 
     return board_obst
