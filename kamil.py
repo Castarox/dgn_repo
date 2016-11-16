@@ -24,7 +24,6 @@ def doors(row, column, board, level):
 
 
 def game_or_not(row, column, map, door_pass, level):
-
     lista = ['a','b','c','d','e']
     if map[row][column] == str(door_pass) and map[row][column] not in lista:
         return 'level pass'
@@ -33,4 +32,42 @@ def game_or_not(row, column, map, door_pass, level):
         if level == 1:
             game.main()
         elif level == 2:
-            game.main()
+            rock_paper()
+
+
+def rock_paper():
+    player_points = 0
+    computer_points = 0
+    options = ['rock', 'scissors', 'paper']
+    while player_points < 3 or computer_points < 3:
+        user_choice = input('What you chosse: Rock(1), Scissors(2), Paper(3) ')
+        computer_choice = random.randrange(1,4)
+        computer_choice = str(computer_choice)
+        user_choice = str(user_choice)
+        if user_choice == computer_choice:
+            print('Draw !')
+        elif user_choice == '1' and computer_choice == '2':
+            print('You Win !')
+            player_points += 1
+        elif user_choice == '1' and computer_choice == '3':
+            print ('You Losse')
+            computer_points += 1
+        elif user_choice == '2' and computer_choice == '3':
+            print('You Win !')
+            player_points += 1
+        elif user_choice == '2' and computer_choice == '1':
+            print ('You Losse')
+            computer_points += 1
+        elif user_choice == '3' and computer_choice == '1':
+            print('You Win !')
+            player_points += 1
+        elif user_choice == '3' and computer_choice == '2':
+            print ('You Losse')
+            computer_points += 1
+    if player_points == 3:
+        print('Great you win the game')
+    else:
+        ('You losse whole game !!')
+
+        
+

@@ -31,18 +31,39 @@ def tablica(x=20, y=60):
         for kolumn in range(y):
             if rzad == 0 or rzad == x-1 or kolumn == 0 or kolumn == y-1: 
                 lista[rzad].append('x')
-            elif rzad == player.row and kolumn == player.column:
-                lista[rzad].append('@')
-            elif rzad in range(5,10) and kolumn in range(5,10):
-                lista[rzad].append('x')
-            elif rzad in range(14,19) and kolumn in range(12,20):
-                lista[rzad].append('x')
-            elif rzad in range(5,13) and kolumn in range(35,45):
-                lista[rzad].append('x')
+            #elif rzad == player.row and kolumn == player.column:
+            #    lista[rzad].append('@')
+            #elif rzad in range(5,10) and kolumn in range(5,10):
+            #    lista[rzad].append('x')
+            #elif rzad in range(14,19) and kolumn in range(12,20):
+            #    lista[rzad].append('x')
+            #elif rzad in range(5,13) and kolumn in range(35,45):
+            #    lista[rzad].append('x')
             else:
                 lista[rzad].append('.')
     return lista
 
+
+def rocks():
+    number_rocks_try = 15
+    count = 0
+    while count < number_rocks_try:
+        row = random.randrange(2,12)
+        column = random.randrange(2,50)
+        size = random.randrange(4,6)
+        size_two = random.randrange(4,6)
+        for i in range(size):
+            row_tmp = row
+            if player.map[row][column] == '.':
+                player.map[row][column] = 'x'
+                for i in range(size_two):
+                    row_tmp += 1
+                    if player.map[row_tmp][column] == '.':
+                        player.map[row_tmp][column] = 'x'    
+                column += 1
+            else:
+                break
+        count += 1
 
 def drukowanie_tablicy(lista):
     for i in lista:
@@ -104,6 +125,7 @@ def random_item():
 def create_level():
     door_pass = random.randrange(1,4)
     player.map = tablica()
+    rocks()
     print(player.level)
     player.map = doors(20, 60, player.map, player.level)
     random_item()

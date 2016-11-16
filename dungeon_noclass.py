@@ -77,7 +77,6 @@ def move(step, position, boardxy, door_pass, loot, level):
             boardxy[position[0]][position[1]] = "."
             position[0] += 1
     if status == 'level pass':
-
         level += 1
         create_level(level, loot)
 
