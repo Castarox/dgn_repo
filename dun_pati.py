@@ -52,3 +52,37 @@ def add_to_inventory(item, loot):
     print("\n***Inventory upgraded***\n")
     print("You have %d %s" %(item.amount, item.name))
     return loot
+
+
+def obstacle(board_obst, amount=10, size=8):
+    """Prints random obstacles on board"""
+
+    if level == 1:
+        disper = 7
+        yy = 2
+        for n in range(amount):
+            rock_x = random.randint(4,22 - size)
+            rock_y = random.randint(yy, disper)
+            ran_size = random.randint(4, size)
+            for n in range(ran_size):
+                for m in range(ran_size):
+                    board_obst[rock_x + n][rock_y + m] = "X"
+            disper += 7
+            yy += 7
+    elif level == 2:
+        disper = 7
+        yy = 7
+        for n in range(amount):
+            rock_x = random.randint(2,22 - size)
+            rock_y = random.randint(yy, disper)
+            ran_size = random.randrange(3, 9, 2)
+            for n in range(ran_size): # 0, 1, 2
+                for m in range(n): # 0
+                    board_obst[rock_x + n][rock_y + m] = "X"
+                    board_obst[rock_x + n][rock_y - m] = "X"
+            disper += 7
+            yy += 7
+
+
+
+    return board_obst
