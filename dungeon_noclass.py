@@ -3,7 +3,8 @@ import random
 from kamil import *
 import start_game
 from dun_pati import *
-
+from  termcolor import cprint
+from inventory import *
 
 def getch():
     """Reads one character without enter"""
@@ -20,8 +21,18 @@ def getch():
 
 def print_board(board):
     """Prints board"""
+
     for row in board:
-        print("".join(row))
+        for element in row:
+            if element == '.':
+                print("".join(element),end='')
+            elif element == 'X':
+                cprint("".join(element),'green',end='')
+            elif element == '1' or element == '2' or element == '3':
+                cprint("".join(element), 'red', end='')
+            else:
+                print("".join(element), end='')
+        print('')
 
 
 def board(boardxy, x = 23, y = 80):
@@ -121,6 +132,7 @@ def create_level(level, loot):
     while True:
         # os.system('clear')
         print_board(game_board)
+        display_inventory(loot)
         y = getch()
 
         hero = move(y, hero, game_board, door_pass,loot, level)
@@ -138,6 +150,7 @@ def create_level(level, loot):
 def main ():
 
     loot = []
+
     level = 1
     start_game.start()
     create_level(level, loot)
