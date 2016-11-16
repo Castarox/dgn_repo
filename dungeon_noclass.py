@@ -39,28 +39,13 @@ def board(boardxy, x = 23, y = 80):
     return boardxy
 
 
-def obstacle(board_obst, amount=10, size=8):
-    """Prints random obstacles on board"""
-    disper = 7
-    yy = 2
-    for n in range(amount):
-        rock_x = random.randint(4,22 - size)
-        rock_y = random.randint(yy, disper)
-        ran_size = random.randint(4, size)
-        for n in range(ran_size):
-            for m in range(ran_size):
-                board_obst[rock_x + n][rock_y + m] = "X"
-        disper += 7
-        yy += 7
-    return board_obst
-
-
 def hero_position(position, boardxy):
     boardxy[position[0]][ position[1]] = "@"
     return boardxy
 
 
-def move(step, position, boardxy, door_pass,level):
+
+def move(step, position, boardxy, door_pass, loot, level):
     status = ''
     if step == "d": #move right
         if boardxy[position[0]][position[1]+1] == "X":
@@ -92,8 +77,10 @@ def move(step, position, boardxy, door_pass,level):
             boardxy[position[0]][position[1]] = "."
             position[0] += 1
     if status == 'level pass':
+
         level += 1
-        create_level(level)
+        create_level(level, loot)
+
     else:
         return position
 
@@ -114,11 +101,9 @@ def random_item(boardxy, items_position):
     return boardxy
 
 
-
-
-
-def create_level(level):
-    loot = []
+def create_level(level, loot):
+    print(level)
+    print('\n\n\n\n\n\n\n\n')
     items_position = []
     hero = [12, 1]
     door_pass = random.randrange(1,4)
@@ -126,7 +111,7 @@ def create_level(level):
     start_board = []
     start_board = board(start_board)
     start_board = hero_position(hero, start_board)
-    start_board = obstacle(start_board)
+    start_board = obstacle(level, start_board)
     start_board = random_item(start_board, items_position)
     doors(23,80, start_board, level)
     print_board(start_board)
@@ -136,21 +121,26 @@ def create_level(level):
         # os.system('clear')
         print_board(game_board)
         y = getch()
-        hero = move(y, hero, game_board, door_pass,level)
+
+        hero = move(y, hero, game_board, door_pass,loot, level)
         hero_position(hero, game_board)
         if hero in items_position:
             what = items_position.index(hero)
-            items_position.pop(what)
+
             found = find_object(what)
+            items_position.pop(what)
             loot = add_to_inventory(found, loot)
 
         if y == "\\":
             exit()
 
 def main ():
-    level = 1 
+
+    loot = []
+    level = 1
     start_game.start()
-    create_level(level)
+    create_level(level, loot)
+
     #print(id(game_board), id(start_board))
 
 
