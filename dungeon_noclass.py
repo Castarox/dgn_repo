@@ -165,6 +165,7 @@ def create_level(level, loot):
         if hero in items_position:
             what = items_position.index(hero)
 
+
             found = find_object(what,loot)
             items_position.pop(what)
             loot = add_to_inventory(found, loot)
@@ -175,7 +176,6 @@ def create_level(level, loot):
 def main ():
 
     loot = [rope, onion, dagger]
-
     level = 1
     start_game.start()
     create_level(level, loot)
