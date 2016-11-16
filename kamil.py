@@ -2,34 +2,72 @@ import random, os
 from termcolor import colored
 import game
 
-def doors(row, column, board):
+def doors(row, column, board, level):
     door_number = 1
-    for i in range(3):
-        x = random.randrange(1,5)
-        if x == 1:
-            position = random.randrange(1,column-1)
-            board[0][position] = str(door_number)
-        elif x == 2:
-            position = random.randrange(1,column-1)
-            board[row-1][position] = str(door_number)
-        elif x == 3:
-            position = random.randrange(1,row-1)
-            board[position][0] = str(door_number)
-        else:
-            position = random.randrange(1,row-1)
-            board[position][column-1] = str(door_number)
-        door_number += 1
+    if level < 3:
+        for i in range(3):
+            x = random.randrange(1,5)
+            if x == 1:
+                position = random.randrange(1,column-1)
+                board[0][position] = str(door_number)
+            elif x == 2:
+                position = random.randrange(1,column-1)
+                board[row-1][position] = str(door_number)
+            elif x == 3:
+                position = random.randrange(1,row-1)
+                board[position][0] = str(door_number)
+            else:
+                position = random.randrange(1,row-1)
+                board[position][column-1] = str(door_number)
+            door_number += 1
     return board
 
 
-def game_or_not(row, column, map, door_pass):
-
+def game_or_not(row, column, map, door_pass, level):
     lista = ['a','b','c','d','e']
-    print(map[row][column])
-    print(map[row][column] == door_pass)
     if map[row][column] == str(door_pass) and map[row][column] not in lista:
-        print('level pass')
         return 'level pass'
     elif map[row][column] != '.' and map[row][column] not in lista and map[row][column] != 'x':
         os.system('clear')
-        game.main()
+        if level == 1:
+            game.main()
+        elif level == 2:
+            rock_paper()
+
+
+def rock_paper():
+    player_points = 0
+    computer_points = 0
+    options = ['rock', 'scissors', 'paper']
+    while player_points < 3 or computer_points < 3:
+        user_choice = input('What you chosse: Rock(1), Scissors(2), Paper(3) ')
+        computer_choice = random.randrange(1,4)
+        computer_choice = str(computer_choice)
+        user_choice = str(user_choice)
+        if user_choice == computer_choice:
+            print('Draw !')
+        elif user_choice == '1' and computer_choice == '2':
+            print('You Win !')
+            player_points += 1
+        elif user_choice == '1' and computer_choice == '3':
+            print ('You Losse')
+            computer_points += 1
+        elif user_choice == '2' and computer_choice == '3':
+            print('You Win !')
+            player_points += 1
+        elif user_choice == '2' and computer_choice == '1':
+            print ('You Losse')
+            computer_points += 1
+        elif user_choice == '3' and computer_choice == '1':
+            print('You Win !')
+            player_points += 1
+        elif user_choice == '3' and computer_choice == '2':
+            print ('You Losse')
+            computer_points += 1
+    if player_points == 3:
+        print('Great you win the game')
+    else:
+        ('You losse whole game !!')
+
+        
+
