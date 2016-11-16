@@ -27,7 +27,7 @@ def game_or_not(row, column, map, door_pass):
     lista = ['a','b','c','d','e']
     print(map[row][column])
     print(map[row][column] == door_pass)
-    if map[row][column] == door_pass and map[row][column] not in lista:
+    if map[row][column] == str(door_pass) and map[row][column] not in lista:
         print('level pass')
         return 'level pass'
     elif map[row][column] != '.' and map[row][column] not in lista and map[row][column] != 'x':

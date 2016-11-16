@@ -60,7 +60,7 @@ def hero_position(position, boardxy):
     return boardxy
 
 
-def move(step, position, boardxy, door_pass):
+def move(step, position, boardxy, door_pass,level):
     status = ''
     if step == "d": #move right
         if boardxy[position[0]][position[1]+1] == "X":
@@ -92,7 +92,8 @@ def move(step, position, boardxy, door_pass):
             boardxy[position[0]][position[1]] = "."
             position[0] += 1
     if status == 'level pass':
-        create_level()
+        level += 1
+        create_level(level)
     else:
         return position
 
@@ -116,8 +117,9 @@ def random_item(boardxy, items_position):
 
 
 
-def create_level():
-
+def create_level(level):
+    print(level)
+    print('\n\n\n\n\n\n\n\n')
     loot = []
     items_position = []
     hero = [12, 1]
@@ -135,7 +137,7 @@ def create_level():
         # os.system('clear')
         print_board(game_board)
         y = getch()
-        hero = move(y, hero, game_board, door_pass)
+        hero = move(y, hero, game_board, door_pass,level)
         hero_position(hero, game_board)
         if hero in items_position:
             what = items_position.index(hero)
@@ -147,8 +149,9 @@ def create_level():
             exit()
 
 def main ():
+    level = 1 
     start_game.start()
-    create_level()
+    create_level(level)
     #print(id(game_board), id(start_board))
 
 
