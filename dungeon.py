@@ -7,6 +7,7 @@ class user_class:
         self.row = 1
         self.column = 1
         self.map = []
+        self.life = 5
 
 
 player = user_class()
@@ -49,7 +50,7 @@ def drukowanie_tablicy(lista):
 def move(user_input, door_pass):
     if user_input == 'a':
         player.column -= 1
-        game_or_not(player.row, player.column, player.map, door_pass)
+        status = game_or_not(player.row, player.column, player.map, door_pass)
         if player.map[player.row][player.column] == '.':
             player.map[player.row][player.column] = '@'
             player.map[player.row][player.column+1] = '.'
@@ -57,7 +58,7 @@ def move(user_input, door_pass):
             player.column +=1
     elif user_input == 'd':
         player.column += 1
-        game_or_not(player.row, player.column, player.map, door_pass)
+        status = game_or_not(player.row, player.column, player.map, door_pass)
         if player.map[player.row][player.column] == '.':
             player.map[player.row][player.column] = '@'
             player.map[player.row][player.column-1] = '.'
@@ -65,7 +66,7 @@ def move(user_input, door_pass):
             player.column -= 1
     elif user_input == 'w':
         player.row -= 1
-        game_or_not(player.row, player.column, player.map, door_pass)
+        status = game_or_not(player.row, player.column, player.map, door_pass)
         if player.map[player.row][player.column] == '.':
             player.map[player.row][player.column] = '@'
             player.map[player.row+1][player.column] = '.'
@@ -73,7 +74,7 @@ def move(user_input, door_pass):
             player.row += 1
     elif user_input == 's':
         player.row += 1
-        game_or_not(player.row, player.column, player.map, door_pass) 
+        status = game_or_not(player.row, player.column, player.map, door_pass) 
         if player.map[player.row][player.column] == '.':
             player.map[player.row][player.column] = '@'
             player.map[player.row-1][player.column] = '.'
@@ -81,6 +82,8 @@ def move(user_input, door_pass):
             player.row -= 1
     else:
         sys.exit()
+    if status == 'level pass':
+        create_level()
 
 def random_item():
     i = 0
@@ -95,22 +98,24 @@ def random_item():
         if i == 5:
             break
 
-def main():
+
+def create_level():
     door_pass = random.randrange(1,4)
-    start_game.start()
-    start = getch()
-    if start:
-        os.system('clear')
     player.map = tablica()
+    player.map = doors(20, 60, player.map)
     random_item()
-    doors(20, 60, player.map)
     drukowanie_tablicy(player.map)
     while True:
         user_input = getch()
         move(user_input, door_pass)
-        os.system('clear')
+        #os.system('clear')
         drukowanie_tablicy(player.map)
         print(door_pass)
+
+def main():
+    start_game.start()
+    create_level()
+    
     
     
 

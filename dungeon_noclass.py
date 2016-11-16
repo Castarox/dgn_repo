@@ -61,11 +61,12 @@ def hero_position(position, boardxy):
 
 
 def move(step, position, boardxy, door_pass):
+    status = ''
     if step == "d": #move right
         if boardxy[position[0]][position[1]+1] == "X":
             return position
         else:
-            game_or_not(position[0], position[1]+1, boardxy, '2')
+            status = game_or_not(position[0], position[1]+1, boardxy, '2')
             boardxy[position[0]][position[1]] = "."
             position[1] += 1
 
@@ -73,25 +74,27 @@ def move(step, position, boardxy, door_pass):
         if boardxy[position[0]][position[1]-1] == "X":
             return position
         else:
-            game_or_not(position[0], position[1]-1, boardxy, '2')
+            status = game_or_not(position[0], position[1]-1, boardxy, '2')
             boardxy[position[0]][position[1]] = "."
             position[1] -= 1
     if step == "w": #move up
         if boardxy[position[0]-1][position[1]] == "X":
             return position
         else:
-            game_or_not(position[0]-1, position[1], boardxy, '2')
+            status = game_or_not(position[0]-1, position[1], boardxy, '2')
             boardxy[position[0]][position[1]] = "."
             position[0] -= 1
     if step == "s": #move down
         if boardxy[position[0]+1][position[1]] == "X":
             return position
         else:
-            game_or_not(position[0]+1, position[1], boardxy, '2')
+            status = game_or_not(position[0]+1, position[1], boardxy, '2')
             boardxy[position[0]][position[1]] = "."
             position[0] += 1
-
-    return position
+    if status == 'level pass':
+        create_level()
+    else:
+        return position
 
 
 def random_item(boardxy, items_position):

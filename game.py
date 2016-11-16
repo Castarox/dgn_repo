@@ -109,7 +109,9 @@ def main():
     file.close()
     word = chosse_capitol(capitols) #random capitol
     time_start = time.time() # take time of start game
+    print('### HANG MAN ###')
     while user.life > 0 or victory == True: # game loop
+        print(user.capital)
         user.ass_count() #increse number of attempts
         print('\nYou have %s lifes' % (user.life))
         print('Here it is your word')
@@ -126,10 +128,10 @@ def main():
     user.ass_time(time_end) #assing game time to class
     if victory == True:
         print('\nGreat job you win in %d tries and in %d seconds' % (user.count, user.time))
-        new_game()
+        return 'victory'
     else:
         print('\nSory you losse maybe next time. The correct word was: %s' % (user.capital))
-        new_game()
+        return 'losse'
 
 if __name__ == '__main__': 
     main()
