@@ -18,18 +18,45 @@ def getch():
         termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
     return ch
 
+def level1(element,level):
 
-def print_board(board,level = 3):
+    if level == 1:
+        print("".join(element), end='')
+    elif level == 2:
+        cprint("".join(element), 'yellow', end='')
+    else:
+        cprint("".join(element), 'red', end='')
+
+def level2(element,level):
+
+    if level == 1:
+        cprint("".join(element), 'red', end='')
+    elif level == 2:
+        cprint("".join(element), 'green', end='')
+    else:
+        cprint("".join(element), 'blue', end='')
+
+def level3(element,level):
+
+    if level == 1:
+        cprint("".join(element), 'cyan', end='')
+    elif level == 2:
+        cprint("".join(element), 'white', end='')
+    else:
+        cprint("".join(element), 'green', end='')
+
+
+def print_board(board,level = 1):
     """Prints board"""
     print('Akutalny level',level)
     for row in board:
         for element in row:
             if element == '.':
-                print("".join(element),end='')
+                level1(element,level)
             elif element == 'X':
-                cprint("".join(element),'green',end='')
+                level2(element, level)
             elif element == '1' or element == '2' or element == '3':
-                cprint("".join(element), 'red', end='')
+                level3(element, level)
             else:
                 print("".join(element), end='')
         print('')
@@ -138,7 +165,8 @@ def create_level(level, loot):
         if hero in items_position:
             what = items_position.index(hero)
 
-            found = find_object(what, loot)
+
+            found = find_object(what,loot)
             items_position.pop(what)
             loot = add_to_inventory(found, loot)
 
