@@ -27,7 +27,6 @@ def obstacle(level, board_obst, amount=10, size=8):
     """Prints random obstacles on board"""
 
     if level == 1:
-        board_obst[0][1:9] = "the city"
         disper = 7
         yy = 2
         for n in range(amount):

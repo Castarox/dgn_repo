@@ -135,7 +135,7 @@ def create_level(level, loot):
 
 def main ():
 
-    loot = []
+    loot = [rope, onion, dagger]
     level = 1
     start_game.start()
     create_level(level, loot)
