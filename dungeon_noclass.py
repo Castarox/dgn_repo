@@ -19,9 +19,9 @@ def getch():
     return ch
 
 
-def print_board(board):
+def print_board(board,level = 3):
     """Prints board"""
-
+    print('Akutalny level',level)
     for row in board:
         for element in row:
             if element == '.':
@@ -129,7 +129,7 @@ def create_level(level, loot):
 
     while True:
         # os.system('clear')
-        print_board(game_board)
+        print_board(game_board,level)
         display_inventory(loot)
         y = getch()
 
