@@ -54,7 +54,7 @@ def add_to_inventory(item, loot):
     return loot
 
 
-def obstacle(board_obst, amount=10, size=8):
+def obstacle(level, board_obst, amount=10, size=8):
     """Prints random obstacles on board"""
 
     if level == 1:
