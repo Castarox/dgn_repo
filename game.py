@@ -101,7 +101,8 @@ def new_game():
 
 
 def main():
-    user.ass_life(5) # set life to 5
+    user.ass_life(5)
+    user.count = 0 # set life to 5
     victory = False
     capitols = []
     file = open('capitals.txt', 'r+')

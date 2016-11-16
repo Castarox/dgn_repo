@@ -2,6 +2,7 @@ import random, os
 from termcolor import colored
 import game
 import time
+import Hot_or_cold
 
 def doors(row, column, board, level):
     door_number = 1
@@ -32,10 +33,12 @@ def game_or_not(row, column, map, door_pass, level):
         os.system('clear')
         if level == 1:
             game.main()
-            time.sleep(5)
+            time.sleep(2)
         elif level == 2:
             rock_paper()
-            time.sleep(5)
+            time.sleep(2)
+        elif level == 3:
+            Hot_or_cold.main()
 
 
 def rock_paper():
