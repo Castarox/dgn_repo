@@ -113,7 +113,12 @@ def random_item(boardxy, items_position):
     return boardxy
 
 
+
+
+
 def create_level():
+
+    loot = []
     items_position = []
     hero = [12, 1]
     door_pass = random.randrange(1,4)
@@ -122,9 +127,10 @@ def create_level():
     start_board = hero_position(hero, start_board)
     start_board = obstacle(start_board)
     start_board = random_item(start_board, items_position)
-    doors(23, 80, start_board)
+    doors(23,80, start_board)
     print_board(start_board)
     game_board = start_board[:]
+
     while True:
         # os.system('clear')
         print_board(game_board)
@@ -133,7 +139,10 @@ def create_level():
         hero_position(hero, game_board)
         if hero in items_position:
             what = items_position.index(hero)
-            find_object(what)
+            items_position.pop(what)
+            found = find_object(what)
+            loot = add_to_inventory(found, loot)
+
         if y == "\\":
             exit()
 
@@ -142,7 +151,7 @@ def main ():
     create_level()
     #print(id(game_board), id(start_board))
 
-    
+
 
 
 if __name__ == "__main__":

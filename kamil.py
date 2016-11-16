@@ -23,6 +23,7 @@ def doors(row, column, board):
 
 
 def game_or_not(row, column, map, door_pass):
+
     lista = ['a','b','c','d','e']
     print(map[row][column])
     print(map[row][column] == door_pass)
@@ -32,4 +33,3 @@ def game_or_not(row, column, map, door_pass):
     elif map[row][column] != '.' and map[row][column] not in lista and map[row][column] != 'x':
         os.system('clear')
         game.main()
-
