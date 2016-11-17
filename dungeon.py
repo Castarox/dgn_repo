@@ -4,7 +4,6 @@ import start_game
 import dun_pati
 from  termcolor import cprint
 from dun_pati import *
-import inventory
 
 class user_class:
     def __init__(self):
@@ -98,6 +97,8 @@ def move(user_input, door_pass):
             status = game_or_not(player.row + key[user_input][0], player.column+key[user_input][1], player.map, door_pass, player.level)
         elif player.map[player.row + key[user_input][0]][player.column+key[user_input][1]] == '$':
             status = game_or_not(player.row + key[user_input][0], player.column+key[user_input][1], player.map, door_pass, player.level)
+    elif user_input == 'l':
+        display_inventory(player.loot)
     else:
         exit()
     if status == 'level pass':
@@ -131,7 +132,6 @@ def create_level():
     item_position = random_item()
     drukowanie_tablicy(player.map)
     while True:
-        inventory.display_inventory(player.loot)
         user_input = getch()
         move(user_input, door_pass)
         #os.system('clear')
