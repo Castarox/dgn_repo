@@ -1,7 +1,8 @@
 import random
 
+
 def number_generator():
-    number = random.randrange(100,999)
+    number = random.randrange(100, 999)
     number = str(number)
     return number
 
@@ -12,41 +13,51 @@ def check_win(user_input, number):
     else:
         return False
 
+
 def check(user_input, number):
     counter = 0
     hot = []
     for i in range(len(number)):
         if number[i] == user_input[i]:
-                print('hot', end=' ')
-                hot.append(i)
-                counter += 1
+            print('Hot', end=' ')
+            hot.append(i)
+            counter += 1
     for i in range(len(number)):
         if i not in hot and user_input[i] in number:
-            print('warm', end=' ' )
+            print('Warm', end=' ')
             counter += 1
     if counter == 0:
-        print("cold")
+        print("Cold", end=' ')
+
+
+def hints_dictionary():
+    hints_dict = {'  Cold': 'No digit is correct.', '  Warm': 'One digit is correct but in the wrong position.',
+                  '  Hot': 'One digit is correct and already in the right place.'}
+    for key in hints_dict:
+        print ("{:<17} {}\n".format(key, hints_dict[key]))
 
 
 def main():
-    print('I am thinking of a 3-digit number. Try to guess what it is.')
-    print('Here are some clues:')
-    print('When I say: \t That means:')
-    print("{:>2} {:>12}".format("Cold","No digit is correct."))
+    print("\nI am thinking of a 3-digit number. You have 10 guesses\033[1m to get it\033[0m.")  # "to get it" is bold.
+    print('\nHere are some clues:\n')
+    print("When I say:\tThat means:\n")
+    hints_dictionary()
     random_number = number_generator()
     print(random_number)
     guess_count = 1
     while True:
-        user_input = input("\nGuess #%d:\n" % (guess_count))
+        user_input = input("\n\nGuess #%d: \n" % (guess_count))
         if len(user_input) != 3 or not user_input.isdigit():
-            print("wrong input")
+            print("Wrong input!")
             continue
         win = check_win(user_input, random_number)
-        if win == True:
+        if win is True:
+            print("HOT HOT HOT!\nWell done! Your guess was correct.")
             break
         check(user_input, random_number)
         if guess_count == 10:
-            break 
+            print("\nYOU LOOSE!")
+            break
         guess_count += 1
 
 
