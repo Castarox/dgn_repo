@@ -155,11 +155,13 @@ def ass_save():
     player.level = load_tuple[2]
     player.loot = load_tuple[3]
     item_position = load_tuple[4]
+    player.life = load_tuple[5]
     return item_position
 
 
 
 def create_level(status_save = 0):
+    os.system('clear')
     heart = 0
     if status_save == 0:
         item_position = ass_no_save()
@@ -191,7 +193,7 @@ def create_level(status_save = 0):
         if user_input == "\\":
             exit()
         elif user_input == "=":
-            save(player.loot, player.map, place, player.level, item_position)
+            save(player.loot, player.map, place, player.level, item_position, player.life)
         elif user_input == "-":
             player.level += 1
             create_level() 

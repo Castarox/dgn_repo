@@ -18,6 +18,7 @@ def load():
     loott = []
     loot = []
     position =[]
+    life = 0
 
     for i, linia in enumerate(boardxy):
         row = []
@@ -43,10 +44,11 @@ def load():
         position.append((pole))
 
     print(position)
-
-
+    for pole in boardxy[26].split(",")[1:]:
+        life = int(pole)
+        print(life)
     for i, row in enumerate(boardxy):
-        if i >= 26:
+        if i >= 27:
             item = []
             for pole in row.split(","):
                 item.append(pole)
@@ -60,4 +62,4 @@ def load():
         print()
 
 
-    return board, hero, level, loot, position
+    return board, hero, level, loot, position, life
