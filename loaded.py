@@ -7,7 +7,7 @@ from inventory import *
         print(''.join(i))"""
 
 def load():
-    with open('pati_save.csv', 'r') as lfile:
+    with open('save/pati_save.csv', 'r') as lfile:
         boardxy = [row.strip("\n") for row in lfile]
 
     board = []
