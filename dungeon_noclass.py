@@ -4,7 +4,6 @@ from kamil import *
 import start_game
 from dun_pati import *
 from  termcolor import cprint
-from inventory import *
 
 def getch():
     """Reads one character without enter"""
@@ -127,6 +126,7 @@ def boss(board):
     return board
 
 def create_level(level, loot):
+    hide = 0
     print(level)
     print('\n\n\n\n\n\n\n\n')
     items_position = []
@@ -140,27 +140,33 @@ def create_level(level, loot):
     start_board = random_item(start_board, items_position)
     doors(23,80, start_board, level)
     print_board(start_board)
+
     game_board = start_board[:]
     if level == 3:
         game_board = boss(game_board) 
     while True:
         os.system('clear')
         print_board(game_board,level)
-        display_inventory(loot)
         user_move = getch()
         hero = move(user_move, hero, game_board, door_pass,loot, level)
         hero_position(hero, game_board)
+
         if hero in items_position:
             what = items_position.index(hero)
             found = find_object(what,loot)
             items_position.pop(what)
             loot = add_to_inventory(found, loot)
+
+        if user_move == "l":
+            display_inventory(loot)
+
         if user_move == "\\":
             exit()
 
 def main ():
     loot = [rope, onion, dagger]
     level = 1
+    display_on_off = False
     start_game.start()
     create_level(level, loot)
 
