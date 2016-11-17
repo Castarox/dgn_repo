@@ -218,7 +218,6 @@ def main ():
     onion.amount = 1
     dagger.amount = 1
     level = 1
-    display_on_off = False
     start_game.start()
     create_level(level, loot)
 

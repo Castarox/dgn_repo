@@ -3,6 +3,7 @@ from termcolor import colored
 import game
 import time
 import Hot_or_cold
+from start_game import win_game, game_over
 
 def doors(row, column, board, level):
     door_number = 1
@@ -27,19 +28,33 @@ def doors(row, column, board, level):
 
 def game_or_not(row, column, map, door_pass, level):
     lista = ['a','b','c','d','e']
+    score = ''
     if map[row][column] == str(door_pass) and map[row][column] not in lista:
         return 'level pass'
-    elif map[row][column] != '.' and map[row][column] not in lista and map[row][column] != 'x':
+    #elif map[row][column] != '.' and map[row][column] not in lista and map[row][column] != 'x':
+    else:
         os.system('clear')
         if level == 1:
-            game.main()
+            score = game.main()
             time.sleep(2)
         elif level == 2:
-            rock_paper()
+            score = rock_paper()
             time.sleep(2)
-        elif level == 3:
-            Hot_or_cold.main()
+    return score
 
+def boss_fight(life):
+    os.system('clear')
+    status = Hot_or_cold.main(life)
+    if status == 'Win':
+        os.system('clear')
+        win_game()
+        time.sleep(3)
+        exit()
+    else:
+        os.system('clear')
+        game_over()
+        time.sleep(3)
+        exit()
 
 def rock_paper():
     player_points = 0

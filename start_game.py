@@ -1,5 +1,5 @@
 from termcolor import colored
-from dungeon_noclass_tt import loaded_game
+from dungeon import loaded_game
 welcome_file = 'welcome.txt'
 credits_file = 'credits.txt'
 help_file = 'help.txt'
@@ -40,9 +40,19 @@ def help():
 	with open(help_file, 'r') as content:
 		text = content.read()
 		print(colored(text, 'green'))
-		print('To move hero use A,D,W,S')
+		print('To move hero use W,S,A,D')
 		print()
 
+def win_game():
+	with open('win_game.txt', 'r') as content:
+		text = content.read()
+		print(colored(text, 'yellow'))
+
+def game_over():
+	with open('game_over.txt', 'r') as content:
+		text = content.read()
+		print(colored(text, 'red'))
+		print()
 
 def display_menu():
 	print('Start Game press 1')

@@ -58,7 +58,5 @@ def load():
         loot.append(item[0])
         print()
 
-    print(loot)
-    display_inventory(loot)
 
     return board, hero, level, loot, position
