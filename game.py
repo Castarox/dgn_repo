@@ -101,7 +101,8 @@ def new_game():
 
 
 def main():
-    user.ass_life(5) # set life to 5
+    user.ass_life(5)
+    user.count = 0 # set life to 5
     victory = False
     capitols = []
     file = open('capitals.txt', 'r+')
@@ -128,10 +129,10 @@ def main():
     user.ass_time(time_end) #assing game time to class
     if victory == True:
         print('\nGreat job you win in %d tries and in %d seconds' % (user.count, user.time))
-        return 'victory'
+        return 'Win'
     else:
         print('\nSory you losse maybe next time. The correct word was: %s' % (user.capital))
-        return 'losse'
+        return 'Losse'
 
 if __name__ == '__main__': 
     main()
