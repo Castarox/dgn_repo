@@ -11,7 +11,7 @@ class Stuff():
         self.weight = weight
         self.st_type = st_type
         self.sign = sign
-        self.amount = 1
+        self.amount = 3
 
 
 onion = Stuff('onion', 2, 'food', 'a')
@@ -97,7 +97,31 @@ def totalweight(loot):
     print('Total weight of items: %s\n' % total_amount)
     return total_amount
 
-def display_inventory(inventory):
+
+def operate_inventory(inventory, player_life=10):
+
+    display_inventory(inventory, player_life)
+
+    player_life_value = player_life
+
+    while True:
+        command = input('Commands: Drop Items [d], switch to game [l],add some health points[h] ')
+
+        if command == 'd':
+            player_life_value = drop_item(inventory,player_life_value)
+
+
+        elif command == 'h':
+            player_life_value = life_safer(inventory, player_life_value)
+
+        elif command == 'l':
+            os.system('clear')
+            return player_life_value
+        else:
+            print('Uknown command')
+
+
+def display_inventory(inventory,player_life):
 
     os.system('clear')
     if not inventory:
@@ -105,15 +129,15 @@ def display_inventory(inventory):
         max_board = 55
     else:
         max_key = max(inventory, key=attrgetter('name'))
-        max_board = len(max_key.name)+55
+        max_board = len(max_key.name)+86
 
     total_amount = 0
     total_weight = 0
     max_length_key = '12'
     print('Your inventory')
     cprint('='*max_board,'yellow')
-    print('{:>{length_value}} {:>{length_value}} {:>{length_value}} {:>{length_value}}'.format('Item Name',
-        'Weight','Amount','Total weight',length_value=max_length_key))
+    print('   {:>{length_value}} {:>{length_value}} {:>{length_value}} {:>{length_value}}'.format('Item Name',
+        'Weight','Amount','Total weight',length_value='20'))
 
     for i,object in enumerate(inventory,start=1):
         name = object.name
@@ -123,12 +147,82 @@ def display_inventory(inventory):
         total_weight += total_weight_item
         total_amount += amount
         print('{}. {:>{length_value}} {:>{length_value}} {:>{length_value}} {:>{length_value}}'.format(i,name,
-            weight, amount,total_weight_item,length_value=max_length_key))
+            weight, amount,total_weight_item,length_value='20'))
     print('\n')
-    print('Total items amount {} Total items weight: {}'.format(total_amount,
-        total_weight))
+    print('Total items amount {} Total items weight: {} Ilość żyć {}'.format(total_amount,
+        total_weight,player_life))
     cprint('=' * max_board, 'yellow')
-    command = input('Commands: Drop Items [d], switch to game l ')
+
+
+
+def  drop_item(inventory,player_life):
+
+
+
+    while True:
+        drop = input('Which item you want to drop,enter index of item, x to quit')
+
+        if drop == 'x':
+            print('All set check your inventory')
+            display_inventory(inventory, player_life)
+            return  player_life
+
+        try:
+            drop_int = int(drop)
+        except:
+            print('You cannot pass string , only [x], please try again')
+            pass
+
+        if int(drop_int):
+            count = int(input('How many do you want to drop?'))
+            ele = inventory[drop_int-1]
+            print('Ilość poczatkowa',ele.amount)
+
+            if ele.amount > count and count >= 0:
+                ele.amount -= count
+            elif ele.amount <= count:
+                inventory.pop(drop_int - 1)
+                print('You haven no more {}'.format(ele.name))
+            else:
+                print('Something went wrong please try again')
+
+            display_inventory(inventory, player_life)
+            return player_life
+
+
+def  life_safer(inventory,player_life):
+
+    while True:
+        eat = input('Which item you want to eat to restore your life!!!')
+
+        if eat == 'x':
+            break
+
+        try:
+            eat_int = int(eat)
+        except:
+            print('You cannot pass string , only [x], please try again')
+            pass
+
+        print('Player Life',player_life)
+
+        if int(eat_int):
+            count = int(input('How many do you want to eat?'))
+            ele = inventory[eat_int-1]
+
+            if ele.amount > count and count >= 0:
+                ele.amount -= count
+                player_life_extra = player_life + (count*2)
+                display_inventory(inventory, player_life_extra)
+                return player_life_extra
+            elif ele.amount <= count:
+                inventory.pop(eat_int - 1)
+                print('You haven no more {}'.format(ele.name))
+                player_life_extra = player_life + (ele.amount * 2)
+                display_inventory(inventory,player_life_extra)
+                return player_life_extra
+            else:
+                print('Something went wrong please try again')
 
 
 

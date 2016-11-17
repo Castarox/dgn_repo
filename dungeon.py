@@ -98,7 +98,9 @@ def move(user_input, door_pass):
         elif player.map[player.row + key[user_input][0]][player.column+key[user_input][1]] == '$':
             boss_fight(player.life)
     elif user_input == 'l':
-        display_inventory(player.loot)
+        player.life = operate_inventory(player.loot,player.life)
+
+
     if status == 'level pass':
         player.level += 1
         create_level()
@@ -193,6 +195,7 @@ def create_level(status_save = 0):
         if user_input == "\\":
             exit()
         elif user_input == "=":
+            print(user_input)
             save(player.loot, player.map, place, player.level, item_position, player.life)
         elif user_input == "-":
             player.level += 1
