@@ -7,7 +7,9 @@ from dun_pati import *
 
 def getch():
     """Reads one character without enter"""
-    import sys, tty, termios
+    import sys
+    import tty
+    import termios
     fd = sys.stdin.fileno()
     old_settings = termios.tcgetattr(fd)
     try:
@@ -24,7 +26,7 @@ def print_board(board):
         print("".join(row))
 
 
-def board(boardxy, x = 23, y = 80):
+def board(boardxy, x=23, y=80):
     """Creates board"""
     boardxy = []
     for row in range(x):
@@ -44,7 +46,7 @@ def obstacle(board_obst, amount=10, size=8):
     disper = 7
     yy = 2
     for n in range(amount):
-        rock_x = random.randint(4,22 - size)
+        rock_x = random.randint(4, 22 - size)
         rock_y = random.randint(yy, disper)
         ran_size = random.randint(4, size)
         for n in range(ran_size):
@@ -56,39 +58,39 @@ def obstacle(board_obst, amount=10, size=8):
 
 
 def hero_position(position, boardxy):
-    boardxy[position[0]][ position[1]] = "@"
+    boardxy[position[0]][position[1]] = "@"
     return boardxy
 
 
 def move(step, position, boardxy, door_pass):
     status = ''
-    if step == "d": #move right
-        if boardxy[position[0]][position[1]+1] == "X":
+    if step == "d":  # move right
+        if boardxy[position[0]][position[1] + 1] == "X":
             return position
         else:
-            status = game_or_not(position[0], position[1]+1, boardxy, '2')
+            status = game_or_not(position[0], position[1] + 1, boardxy, '2')
             boardxy[position[0]][position[1]] = "."
             position[1] += 1
 
-    if step == "a": #move left
-        if boardxy[position[0]][position[1]-1] == "X":
+    if step == "a":  # move left
+        if boardxy[position[0]][position[1] - 1] == "X":
             return position
         else:
-            status = game_or_not(position[0], position[1]-1, boardxy, '2')
+            status = game_or_not(position[0], position[1] - 1, boardxy, '2')
             boardxy[position[0]][position[1]] = "."
             position[1] -= 1
-    if step == "w": #move up
-        if boardxy[position[0]-1][position[1]] == "X":
+    if step == "w":  # move up
+        if boardxy[position[0] - 1][position[1]] == "X":
             return position
         else:
-            status = game_or_not(position[0]-1, position[1], boardxy, '2')
+            status = game_or_not(position[0] - 1, position[1], boardxy, '2')
             boardxy[position[0]][position[1]] = "."
             position[0] -= 1
-    if step == "s": #move down
-        if boardxy[position[0]+1][position[1]] == "X":
+    if step == "s":  # move down
+        if boardxy[position[0] + 1][position[1]] == "X":
             return position
         else:
-            status = game_or_not(position[0]+1, position[1], boardxy, '2')
+            status = game_or_not(position[0] + 1, position[1], boardxy, '2')
             boardxy[position[0]][position[1]] = "."
             position[0] += 1
     if status == 'level pass':
@@ -100,7 +102,7 @@ def move(step, position, boardxy, door_pass):
 def random_item(boardxy, items_position):
     i = 0
     count = 1
-    items = ['a','b','c','d','e']
+    items = ['a', 'b', 'c', 'd', 'e']
     while True:
         x = random.randrange(19)
         y = random.randrange(78)
@@ -113,26 +115,23 @@ def random_item(boardxy, items_position):
     return boardxy
 
 
-
-
-
 def create_level():
 
     loot = []
     items_position = []
     hero = [12, 1]
-    door_pass = random.randrange(1,4)
+    door_pass = random.randrange(1, 4)
     start_board = []
     start_board = board(start_board)
     start_board = hero_position(hero, start_board)
     start_board = obstacle(start_board)
     start_board = random_item(start_board, items_position)
-    doors(23,80, start_board)
+    doors(23, 80, start_board)
     print_board(start_board)
     game_board = start_board[:]
 
     while True:
-        # os.system('clear')
+        os.system('clear')
         print_board(game_board)
         y = getch()
         hero = move(y, hero, game_board, door_pass)
@@ -146,13 +145,12 @@ def create_level():
         if y == "\\":
             exit()
 
-def main ():
+
+def main():
     start_game.start()
     create_level()
     #print(id(game_board), id(start_board))
 
 
-
-
 if __name__ == "__main__":
-   main()
+    main()
