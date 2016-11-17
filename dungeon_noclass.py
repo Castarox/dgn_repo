@@ -99,7 +99,7 @@ def move(x, position, boardxy, door_pass, loot, level):
         level += 1
         create_level(level, loot)
     return position
-    
+
 
 def random_item(boardxy, items_position):
     i = 0
@@ -142,7 +142,7 @@ def create_level(level, loot):
     print_board(start_board)
     game_board = start_board[:]
     if level == 3:
-        game_board = boss(game_board) 
+        game_board = boss(game_board)
     while True:
         time.sleep(0.01)
         os.system('clear')
@@ -159,6 +159,8 @@ def create_level(level, loot):
             loot = add_to_inventory(found, loot)
         if user_move == "\\":
             exit()
+        elif user_move == "=":
+            save(loot, game_board, hero, level)
 
 def main ():
     loot = [rope, onion, dagger]
