@@ -1,7 +1,6 @@
 import sys, tty, termios, os, random
 from kamil import *
 import start_game
-import dun_pati
 from  termcolor import cprint
 from dun_pati import *
 
@@ -127,7 +126,7 @@ def create_level():
     player.row = 12
     player.column = 1
     player.map = board()
-    player.map = dun_pati.obstacle(player.level, player.map)
+    player.map = obstacle(player.level, player.map)
     player.map = doors(23, 80, player.map, player.level)
     item_position = random_item()
     drukowanie_tablicy(player.map)
@@ -139,9 +138,9 @@ def create_level():
         place = [player.row, player.column]
         if place in item_position:
             what = item_position.index(place)
-            what_found = dun_pati.find_object(what, player.loot)
+            what_found = find_object(what, player.loot)
             item_position.pop(what)
-            player.loot = dun_pati.add_to_inventory(what_found, player.loot) 
+            player.loot = add_to_inventory(what_found, player.loot) 
         print(door_pass)
 
 def main():
