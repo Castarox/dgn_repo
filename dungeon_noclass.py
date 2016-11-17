@@ -3,15 +3,11 @@ import random
 from kamil import *
 import start_game
 from dun_pati import *
-from termcolor import cprint
-from inventory import *
-
+from  termcolor import cprint
 
 def getch():
     """Reads one character without enter"""
-    import sys
-    import tty
-    import termios
+    import sys, tty, termios
     fd = sys.stdin.fileno()
     old_settings = termios.tcgetattr(fd)
     try:
@@ -22,7 +18,7 @@ def getch():
     return ch
 
 
-def level1(element, level):
+def level1(element,level):
     if level == 1:
         print("".join(element), end='')
     elif level == 2:
@@ -31,7 +27,7 @@ def level1(element, level):
         cprint("".join(element), 'red', end='')
 
 
-def level2(element, level):
+def level2(element,level):
     if level == 1:
         cprint("".join(element), 'red', end='')
     elif level == 2:
@@ -40,7 +36,7 @@ def level2(element, level):
         cprint("".join(element), 'blue', end='')
 
 
-def level3(element, level):
+def level3(element,level):
     if level == 1:
         cprint("".join(element), 'cyan', end='')
     elif level == 2:
@@ -49,13 +45,13 @@ def level3(element, level):
         cprint("".join(element), 'green', end='')
 
 
-def print_board(board, level=1):
+def print_board(board,level = 1):
     """Prints board"""
-    print('Akutalny level', level)
+    print('Akutalny level',level)
     for row in board:
         for element in row:
             if element == '.':
-                level1(element, level)
+                level1(element,level)
             elif element == 'X':
                 level2(element, level)
             elif element == '1' or element == '2' or element == '3':
@@ -65,7 +61,7 @@ def print_board(board, level=1):
         print('')
 
 
-def board(boardxy, x=23, y=80):
+def board(boardxy, x = 23, y = 80):
     """Creates board"""
     boardxy = []
     for row in range(x):
@@ -79,25 +75,25 @@ def board(boardxy, x=23, y=80):
 
 
 def hero_position(position, boardxy):
-    boardxy[position[0]][position[1]] = "@"
+    boardxy[position[0]][ position[1]] = "@"
     return boardxy
 
 
 def move(x, position, boardxy, door_pass, loot, level):
     key = {"w": (-1, 0), "s": (1, 0), "a": (0, -1), "d": (0, 1)}
-    special_character = ['X', '1', '2', '3', '$']
-    doors = ['1', '2', '3']
+    special_character = ['X','1','2','3','$']
+    doors = ['1','2','3']
     status = ''
     if x in key:
-        if boardxy[position[0] + key[x][0]][position[1] + key[x][1]] not in special_character:
+        if boardxy[position[0] + key[x][0]][position[1]+key[x][1]] not in special_character:
             boardxy[position[0]][position[1]] = '.'
-            boardxy[position[0] + key[x][0]][position[1] + key[x][1]] = '@'
+            boardxy[position[0] + key[x][0] ][position[1] + key[x][1] ] = '@'
             position[0] += key[x][0]
             position[1] += key[x][1]
-        elif boardxy[position[0] + key[x][0]][position[1] + key[x][1]] in doors:
-            status = game_or_not(position[0] + key[x][0], position[1] + key[x][1], boardxy, door_pass, level)
-        elif boardxy[position[0] + key[x][0]][position[1] + key[x][1]] == '$':
-            status = game_or_not(position[0] + key[x][0], position[1] + key[x][1], boardxy, door_pass, level)
+        elif boardxy[position[0] + key[x][0]][position[1]+key[x][1]] in doors:
+            status = game_or_not(position[0] + key[x][0], position[1]+key[x][1], boardxy, door_pass, level)
+        elif boardxy[position[0] + key[x][0]][position[1]+key[x][1]] == '$':
+            status = game_or_not(position[0] + key[x][0], position[1]+key[x][1], boardxy, door_pass, level)
     if status == 'level pass':
         level += 1
         create_level(level, loot)
@@ -107,7 +103,7 @@ def move(x, position, boardxy, door_pass, loot, level):
 def random_item(boardxy, items_position):
     i = 0
     count = 1
-    items = ['a', 'b', 'c', 'd', 'e']
+    items = ['a','b','c','d','e']
     while True:
         x = random.randrange(19)
         y = random.randrange(78)
@@ -122,53 +118,62 @@ def random_item(boardxy, items_position):
 
 def boss(board):
     while True:
-        x = random.randrange(1, 23)
-        y = random.randrange(1, 80)
+        x = random.randrange(1,23)
+        y = random.randrange(1,80)
         if str(board[x][y]) == '.':
             board[x][y] = '$'
             break
     return board
 
-
 def create_level(level, loot):
+    hide = 0
     print(level)
     print('\n\n\n\n\n\n\n\n')
     items_position = []
     hero = [12, 1]
-    door_pass = random.randrange(1, 4)
+    door_pass = random.randrange(1,4)
     print(door_pass)
     start_board = []
     start_board = board(start_board)
     start_board = hero_position(hero, start_board)
     start_board = obstacle(level, start_board)
     start_board = random_item(start_board, items_position)
-    doors(23, 80, start_board, level)
+    doors(23,80, start_board, level)
     print_board(start_board)
+
     game_board = start_board[:]
     if level == 3:
         game_board = boss(game_board)
     while True:
+        time.sleep(0.01)
         os.system('clear')
-        print_board(game_board, level)
-        display_inventory(loot)
+        print_board(game_board,level)
         user_move = getch()
-        hero = move(user_move, hero, game_board, door_pass, loot, level)
+        hero = move(user_move, hero, game_board, door_pass,loot, level)
         hero_position(hero, game_board)
+
         if hero in items_position:
             what = items_position.index(hero)
-            found = find_object(what, loot)
+            print(what)
+            found = find_object(what,loot)
             items_position.pop(what)
             loot = add_to_inventory(found, loot)
+
+        if user_move == "l":
+            display_inventory(loot)
+
         if user_move == "\\":
             exit()
+        elif user_move == "=":
+            save(loot, game_board, hero, level)
 
-
-def main():
+def main ():
     loot = [rope, onion, dagger]
     level = 1
+    display_on_off = False
     start_game.start()
     create_level(level, loot)
 
 
 if __name__ == "__main__":
-    main()
+   main()

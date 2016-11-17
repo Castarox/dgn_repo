@@ -1,4 +1,7 @@
 import random
+from operator import attrgetter
+from termcolor import cprint
+import os
 
 
 class Stuff():
@@ -72,20 +75,23 @@ def find_object(what, loot):
     whole = [onion, hat]
     found_object = random.choice(whole)
     print("You found %s" % found_object.name)
-    totalweight(loot)
     return found_object
+
 
 
 def add_to_inventory(item, loot):
     """Add new items to inventory"""
-    print("here ajem")
-    if item in loot:
-        item.amount += 1
+    total_weight = totalweight(loot) + item.weight
+    if total_weight > 30:
+        print("to much shit, You must drop something")
     else:
-        loot.append(item)
-        item.amount = 1
-    print("\n***Inventory upgraded***\n")
-    print("You have %d %s" %(item.amount, item.name))
+        if item in loot:
+            item.amount += 1
+        else:
+            loot.append(item)
+            item.amount = 1
+        print("\n***Inventory upgraded***\n")
+        print("You have %d %s" %(item.amount, item.name))
     #totalweight(loot)
     return loot
 
@@ -95,3 +101,58 @@ def totalweight(loot):
     total_amount = sum([item.weight*item.amount for item in loot])
     print('Total weight of items: %s\n' % total_amount)
     return total_amount
+
+def display_inventory(inventory):
+
+    os.system('clear')
+    if not inventory:
+        inventory=[]
+        max_board = 55
+    else:
+        max_key = max(inventory, key=attrgetter('name'))
+        max_board = len(max_key.name)+55
+
+    total_amount = 0
+    total_weight = 0
+    max_length_key = '12'
+    print('Your inventory')
+    cprint('='*max_board,'yellow')
+    print('{:>{length_value}} {:>{length_value}} {:>{length_value}} {:>{length_value}}'.format('Item Name',
+        'Weight','Amount','Total weight',length_value=max_length_key))
+
+    for i,object in enumerate(inventory,start=1):
+        name = object.name
+        weight = object.weight
+        amount = object.amount
+        total_weight_item = weight * amount
+        total_weight += total_weight_item
+        total_amount += amount
+        print('{}. {:>{length_value}} {:>{length_value}} {:>{length_value}} {:>{length_value}}'.format(i,name,
+            weight, amount,total_weight_item,length_value=max_length_key))
+    print('\n')
+    print('Total items amount {} Total items weight: {}'.format(total_amount,
+        total_weight))
+    cprint('=' * max_board, 'yellow')
+    command = input('Commands: Drop Items [d], switch to game l ')
+
+    # if command == 'd':
+    #
+    # else:
+    #     print('Go go play')
+
+
+def save(loot, boardxy, hero, level):
+    name = input("Enter your name to personalize your save: ")
+    import os
+    #os.system('touch %d_save.csv' % name)
+    with open('%s_save.csv' % (name), 'w') as sfile:
+        for line in boardxy:
+            for point in line:
+                sfile.write('%s,' %(point))
+            sfile.write('\n')
+        sfile.write('hero,%s,%s\n' %(hero[0], hero[1]))
+        sfile.write('level,%s\n' %(level))
+        for item in loot:
+            sfile.write('%s,%d\n' %(item.name, item.amount))
+
+    exit()
