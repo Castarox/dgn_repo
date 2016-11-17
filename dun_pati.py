@@ -132,7 +132,7 @@ def display_inventory(inventory):
 
 
 
-def save(loot, boardxy, hero, level, items_position):
+def save(loot, boardxy, hero, level, items_position, life):
     name = input("Enter your name to personalize your save: ")
     import os
     #os.system('touch %d_save.csv' % name)
@@ -142,8 +142,9 @@ def save(loot, boardxy, hero, level, items_position):
                 sfile.write('%s,' %(point))
             sfile.write('\n')
         sfile.write('hero,%s,%s\n' %(hero[0], hero[1]))
-        sfile.write('level,%s\n' %(level))
+        sfile.write('level,%s\n' % (level))
         sfile.write('items_position, %s\n' % str(items_position))
+        sfile.write('Life, %d\n' % (life))
         for item in loot:
             sfile.write('%s,%d,%s,%d\n' %(item.name, item.weight, item.st_type, item.amount))
     with open('save/list.csv', 'a') as name_file:

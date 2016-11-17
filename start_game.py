@@ -1,11 +1,13 @@
 from termcolor import colored
 import dungeon
+import os
 welcome_file = 'welcome.txt'
 credits_file = 'credits.txt'
 help_file = 'help.txt'
 
 
 def start():
+	os.system('clear')
 	welcome()
 	display_menu()
 	while True:
