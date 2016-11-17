@@ -3,6 +3,8 @@ import random
 from kamil import *
 import start_game
 from dun_pati import *
+from termcolor import cprint
+from inventory import *
 
 
 def getch():
@@ -20,10 +22,47 @@ def getch():
     return ch
 
 
-def print_board(board):
+def level1(element, level):
+    if level == 1:
+        print("".join(element), end='')
+    elif level == 2:
+        cprint("".join(element), 'yellow', end='')
+    else:
+        cprint("".join(element), 'red', end='')
+
+
+def level2(element, level):
+    if level == 1:
+        cprint("".join(element), 'red', end='')
+    elif level == 2:
+        cprint("".join(element), 'green', end='')
+    else:
+        cprint("".join(element), 'blue', end='')
+
+
+def level3(element, level):
+    if level == 1:
+        cprint("".join(element), 'cyan', end='')
+    elif level == 2:
+        cprint("".join(element), 'white', end='')
+    else:
+        cprint("".join(element), 'green', end='')
+
+
+def print_board(board, level=1):
     """Prints board"""
+    print('Akutalny level', level)
     for row in board:
-        print("".join(row))
+        for element in row:
+            if element == '.':
+                level1(element, level)
+            elif element == 'X':
+                level2(element, level)
+            elif element == '1' or element == '2' or element == '3':
+                level3(element, level)
+            else:
+                print("".join(element), end='')
+        print('')
 
 
 def board(boardxy, x=23, y=80):
@@ -36,25 +75,7 @@ def board(boardxy, x=23, y=80):
                 boardxy[row].append("X")
             else:
                 boardxy[row].append(".")
-
-    #boardxy[position[0]][ position[1]] = "@"
     return boardxy
-
-
-def obstacle(board_obst, amount=10, size=8):
-    """Prints random obstacles on board"""
-    disper = 7
-    yy = 2
-    for n in range(amount):
-        rock_x = random.randint(4, 22 - size)
-        rock_y = random.randint(yy, disper)
-        ran_size = random.randint(4, size)
-        for n in range(ran_size):
-            for m in range(ran_size):
-                board_obst[rock_x + n][rock_y + m] = "X"
-        disper += 7
-        yy += 7
-    return board_obst
 
 
 def hero_position(position, boardxy):
@@ -62,41 +83,25 @@ def hero_position(position, boardxy):
     return boardxy
 
 
-def move(step, position, boardxy, door_pass):
+def move(x, position, boardxy, door_pass, loot, level):
+    key = {"w": (-1, 0), "s": (1, 0), "a": (0, -1), "d": (0, 1)}
+    special_character = ['X', '1', '2', '3', '$']
+    doors = ['1', '2', '3']
     status = ''
-    if step == "d":  # move right
-        if boardxy[position[0]][position[1] + 1] == "X":
-            return position
-        else:
-            status = game_or_not(position[0], position[1] + 1, boardxy, '2')
-            boardxy[position[0]][position[1]] = "."
-            position[1] += 1
-
-    if step == "a":  # move left
-        if boardxy[position[0]][position[1] - 1] == "X":
-            return position
-        else:
-            status = game_or_not(position[0], position[1] - 1, boardxy, '2')
-            boardxy[position[0]][position[1]] = "."
-            position[1] -= 1
-    if step == "w":  # move up
-        if boardxy[position[0] - 1][position[1]] == "X":
-            return position
-        else:
-            status = game_or_not(position[0] - 1, position[1], boardxy, '2')
-            boardxy[position[0]][position[1]] = "."
-            position[0] -= 1
-    if step == "s":  # move down
-        if boardxy[position[0] + 1][position[1]] == "X":
-            return position
-        else:
-            status = game_or_not(position[0] + 1, position[1], boardxy, '2')
-            boardxy[position[0]][position[1]] = "."
-            position[0] += 1
+    if x in key:
+        if boardxy[position[0] + key[x][0]][position[1] + key[x][1]] not in special_character:
+            boardxy[position[0]][position[1]] = '.'
+            boardxy[position[0] + key[x][0]][position[1] + key[x][1]] = '@'
+            position[0] += key[x][0]
+            position[1] += key[x][1]
+        elif boardxy[position[0] + key[x][0]][position[1] + key[x][1]] in doors:
+            status = game_or_not(position[0] + key[x][0], position[1] + key[x][1], boardxy, door_pass, level)
+        elif boardxy[position[0] + key[x][0]][position[1] + key[x][1]] == '$':
+            status = game_or_not(position[0] + key[x][0], position[1] + key[x][1], boardxy, door_pass, level)
     if status == 'level pass':
-        create_level()
-    else:
-        return position
+        level += 1
+        create_level(level, loot)
+    return position
 
 
 def random_item(boardxy, items_position):
@@ -115,41 +120,54 @@ def random_item(boardxy, items_position):
     return boardxy
 
 
-def create_level():
+def boss(board):
+    while True:
+        x = random.randrange(1, 23)
+        y = random.randrange(1, 80)
+        if str(board[x][y]) == '.':
+            board[x][y] = '$'
+            break
+    return board
 
-    loot = []
+
+def create_level(level, loot):
+    print(level)
+    print('\n\n\n\n\n\n\n\n')
     items_position = []
     hero = [12, 1]
     door_pass = random.randrange(1, 4)
+    print(door_pass)
     start_board = []
     start_board = board(start_board)
     start_board = hero_position(hero, start_board)
-    start_board = obstacle(start_board)
+    start_board = obstacle(level, start_board)
     start_board = random_item(start_board, items_position)
-    doors(23, 80, start_board)
+    doors(23, 80, start_board, level)
     print_board(start_board)
     game_board = start_board[:]
-
+    if level == 3:
+        game_board = boss(game_board)
     while True:
         os.system('clear')
-        print_board(game_board)
-        y = getch()
-        hero = move(y, hero, game_board, door_pass)
+        print_board(game_board, level)
+        display_inventory(loot)
+        user_move = getch()
+        hero = move(user_move, hero, game_board, door_pass, loot, level)
         hero_position(hero, game_board)
         if hero in items_position:
             what = items_position.index(hero)
+            found = find_object(what, loot)
             items_position.pop(what)
-            found = find_object(what)
             loot = add_to_inventory(found, loot)
-
-        if y == "\\":
+        if user_move == "\\":
             exit()
 
 
 def main():
+    loot = [rope, onion, dagger]
+    level = 1
     start_game.start()
-    create_level()
-    #print(id(game_board), id(start_board))
+    create_level(level, loot)
 
 
 if __name__ == "__main__":
