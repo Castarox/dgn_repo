@@ -144,6 +144,7 @@ def create_level(level, loot):
     if level == 3:
         game_board = boss(game_board) 
     while True:
+        time.sleep(0.01)
         os.system('clear')
         print_board(game_board,level)
         display_inventory(loot)
@@ -152,6 +153,7 @@ def create_level(level, loot):
         hero_position(hero, game_board)
         if hero in items_position:
             what = items_position.index(hero)
+            print(what)
             found = find_object(what,loot)
             items_position.pop(what)
             loot = add_to_inventory(found, loot)
