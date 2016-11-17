@@ -1,15 +1,19 @@
 from termcolor import colored
+import dungeon
+import os
 welcome_file = 'welcome.txt'
 credits_file = 'credits.txt'
 help_file = 'help.txt'
 
 
 def start():
+	os.system('clear')
 	welcome()
 	display_menu()
 	while True:
 		command = input('Enter command :')
 		if command == '1':
+			save_count = 0
 			break
 		elif command == '2':
 			credits()
@@ -18,10 +22,11 @@ def start():
 		elif command == '4':
 			exit()
 		elif command == '5':
-			load()
+			save_count = 1
+			break
 		else:
 			print('Wrong command')
-
+	return save_count
 
 def welcome():
 	with open(welcome_file, 'r') as content:
@@ -39,9 +44,19 @@ def help():
 	with open(help_file, 'r') as content:
 		text = content.read()
 		print(colored(text, 'green'))
-		print('To move hero use A,D,W,S')
+		print('To move hero use W,S,A,D')
 		print()
 
+def win_game():
+	with open('win_game.txt', 'r') as content:
+		text = content.read()
+		print(colored(text, 'yellow'))
+
+def game_over():
+	with open('game_over.txt', 'r') as content:
+		text = content.read()
+		print(colored(text, 'red'))
+		print()
 
 def display_menu():
 	print('Start Game press 1')

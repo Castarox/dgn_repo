@@ -50,25 +50,20 @@ def obstacle(level, board_obst, amount=10, size=8):
             ran_size = random.randrange(3, 9, 2)
             for n in range(ran_size): # 0, 1, 2
                 for m in range(n): # 0
-                    board_obst[rock_x + n][rock_y + m] = "X"
-                    board_obst[rock_x + n][rock_y - m] = "X"
+                    board_obst[rock_x + n][rock_y + m] = "A"
+                    board_obst[rock_x + n][rock_y - m] = "A"
             disper += 7
             yy += 7
     elif level == 3:
         for n in range(2,79):
             for m in range(random.randrange(3, 11, 2)): # 0, 1, 2
-                board_obst[m][n] = "X"
+                board_obst[m][n] = "I"
         for n in range(2,79):
             for m in range(random.randrange(3, 11, 2)):
-                board_obst[22 - m][n] = "X"
+                board_obst[22 - m][n] = "I"
 
     return board_obst
 
-
-
-
-
-#(a, b, c, d, e) = ()
 
 def find_object(what, loot):
     #whole = [onion, carrot, hat, goat, knife, rope, torch, gold, dagger, arrow]
@@ -160,7 +155,6 @@ def display_inventory(inventory,player_life):
 
 
 
-
 def  drop_item(inventory,player_life):
 
 
@@ -232,19 +226,22 @@ def  life_safer(inventory,player_life):
 
 
 
-
-def save(loot, boardxy, hero, level):
+def save(loot, boardxy, hero, level, items_position, life):
     name = input("Enter your name to personalize your save: ")
     import os
     #os.system('touch %d_save.csv' % name)
-    with open('%s_save.csv' % (name), 'w') as sfile:
+    with open('save/%s_save.csv' % (name), 'w') as sfile:
         for line in boardxy:
             for point in line:
                 sfile.write('%s,' %(point))
             sfile.write('\n')
         sfile.write('hero,%s,%s\n' %(hero[0], hero[1]))
-        sfile.write('level,%s\n' %(level))
+        sfile.write('level,%s\n' % (level))
+        sfile.write('items_position, %s\n' % str(items_position))
+        sfile.write('Life, %d\n' % (life))
         for item in loot:
-            sfile.write('%s,%d\n' %(item.name, item.amount))
+            sfile.write('%s,%d,%s,%d\n' %(item.name, item.weight, item.st_type, item.amount))
+    with open('save/list.csv', 'a') as name_file:
+        name_file.write('%s\n' % name)
 
     exit()
