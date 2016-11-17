@@ -1,5 +1,5 @@
 from termcolor import colored
-from dungeon import loaded_game
+import dungeon
 welcome_file = 'welcome.txt'
 credits_file = 'credits.txt'
 help_file = 'help.txt'
@@ -11,6 +11,7 @@ def start():
 	while True:
 		command = input('Enter command :')
 		if command == '1':
+			save_count = 0
 			break
 		elif command == '2':
 			credits()
@@ -19,10 +20,11 @@ def start():
 		elif command == '4':
 			exit()
 		elif command == '5':
-			loaded_game()
+			save_count = 1
+			break
 		else:
 			print('Wrong command')
-
+	return save_count
 
 def welcome():
 	with open(welcome_file, 'r') as content:

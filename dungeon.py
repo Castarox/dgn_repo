@@ -135,15 +135,37 @@ def random_item():
             break
     return item_position
 
-def create_level():
-    heart = 0
-    door_pass = random.randrange(1,4)
+
+def ass_no_save():
     player.row = 12
     player.column = 1
     player.map = board()
     player.map = obstacle(player.level, player.map)
     player.map = doors(23, 80, player.map, player.level)
     item_position = random_item()
+    return item_position
+
+
+def ass_save():
+    load_tuple = load()
+    player.map = load_tuple[0]
+    hero = load_tuple[1]
+    player.row = hero[0]
+    player.column = hero[1]
+    player.level = load_tuple[2]
+    player.loot = load_tuple[3]
+    item_position = load_tuple[4]
+    return item_position
+
+
+
+def create_level(status_save = 0):
+    heart = 0
+    if status_save == 0:
+        item_position = ass_no_save()
+    else:
+        item_position = ass_save()
+    door_pass = random.randrange(1,4)
     if player.level == 3:
         player.map = boss(player.map)
     print_table(player.map)
@@ -175,61 +197,16 @@ def create_level():
             create_level() 
         print(door_pass)
 
-def loaded_game():
-    os.system('clear')
-    load_tuple = load()
-    player.map = load_tuple[0]
-    hero = load_tuple[1]
-    player.row = hero[0]
-    player.column = hero[1]
-    player.level = load_tuple[2]
-    player.loot = load_tuple[3]
-    item_position = load_tuple[4]
-    door_pass = random.randrange(1,4)
-    print(door_pass)
-    print_table(player.map)
-    print('Life:')
-    for heart in range(player.life):
-        cprint('♡', 'green', end=' ')
-    print('')
-    if player.level == 3:
-        player.map = boss(player.map)
-    while True:
-        user_input = getch()
-        move(user_input, door_pass)
-        os.system('clear')
-        print_table(player.map)
-        print('Life:')
-        for heart in range(player.life):
-            cprint('♡', 'green', end=' ')
-        print('')
-        place = [player.row, player.column]
-        if place in item_position:
-            what = item_position.index(place)
-            what_found = find_object(what, player.loot)
-            item_position.pop(what)
-            player.loot = add_to_inventory(what_found, player.loot) 
-        print(door_pass)
-        if user_input == "\\":
-            exit()
-        elif user_input == "=":
-            save(player.loot, player.map, place, player.level, item_position)
-        elif user_input == "-":
-            player.level += 1
-            create_level() 
-        print(door_pass)
 
 def main():
     player.loot = [rope, onion, dagger]
     rope.amount = 1
     onion.amount = 1
     dagger.amount = 1
-    start_game.start()
-    create_level()
+    save_count = start_game.start()
+    create_level(save_count)
     
     
     
-
-
 if __name__=='__main__':
     main()
