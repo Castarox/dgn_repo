@@ -43,12 +43,15 @@ def game_or_not(row, column, map, door_pass, level):
     return score
 
 def boss_fight(life):
+    os.system('clear')
     status = Hot_or_cold.main(life)
     if status == 'Win':
+        os.system('clear')
         win_game()
         time.sleep(3)
         exit()
     else:
+        os.system('clear')
         game_over()
         time.sleep(3)
         exit()

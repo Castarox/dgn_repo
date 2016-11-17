@@ -31,16 +31,19 @@ def check(user_input, number):
 
 
 def hints_dictionary():
+    print("\nI am thinking of a 3-digit number. You have 10 guesses\033[1m to get it\033[0m.")  # "to get it" is bold.
+    print('\nHere are some clues:\n')
+    print("When I say:\tThat means:\n")
+
     hints_dict = {'  Cold': 'No digit is correct.', '  Warm': 'One digit is correct but in the wrong position.',
                   '  Hot': 'One digit is correct and already in the right place.'}
+
     for key in hints_dict:
         print ("{:<17} {}\n".format(key, hints_dict[key]))
 
 
+
 def main(life):
-    print("\nI am thinking of a 3-digit number. You have 10 guesses\033[1m to get it\033[0m.")  # "to get it" is bold.
-    print('\nHere are some clues:\n')
-    print("When I say:\tThat means:\n")
     hints_dictionary()
     random_number = number_generator()
     print(random_number)

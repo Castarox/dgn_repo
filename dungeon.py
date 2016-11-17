@@ -3,6 +3,7 @@ from kamil import *
 import start_game
 from  termcolor import cprint
 from dun_pati import *
+from loaded import *
 
 class user_class:
     def __init__(self):
@@ -68,7 +69,7 @@ def door_print(element,level):
         cprint("".join(element), 'green', end='')
 
 
-def drukowanie_tablicy(table):
+def print_table(table):
     for item in table:
         for element in item:
             if element == '.':
@@ -83,7 +84,7 @@ def drukowanie_tablicy(table):
 
 def move(user_input, door_pass):
     key = {"w": (-1, 0), "s": (1, 0), "a": (0, -1), "d": (0, 1)}
-    special_character = ['X','1','2','3','$']
+    special_character = ['X', '1', '2', '3', '$', 'A', 'I']
     doors = ['1','2','3']
     status = ''
     if user_input in key:
@@ -98,10 +99,6 @@ def move(user_input, door_pass):
             boss_fight(player.life)
     elif user_input == 'l':
         display_inventory(player.loot)
-    else:
-        exit()
-    print(player.life)
-    print(status)
     if status == 'level pass':
         player.level += 1
         create_level()
@@ -149,7 +146,7 @@ def create_level():
     item_position = random_item()
     if player.level == 3:
         player.map = boss(player.map)
-    drukowanie_tablicy(player.map)
+    print_table(player.map)
     print('Life:')
     for heart in range(player.life):
         cprint('♡', 'green', end=' ')
@@ -158,7 +155,50 @@ def create_level():
         user_input = getch()
         move(user_input, door_pass)
         os.system('clear')
-        drukowanie_tablicy(player.map)
+        print_table(player.map)
+        print('Life:')
+        for heart in range(player.life):
+            cprint('♡', 'green', end=' ')
+        print('')
+        place = [player.row, player.column]
+        if place in item_position:
+            what = item_position.index(place)
+            what_found = find_object(what, player.loot)
+            item_position.pop(what)
+            player.loot = add_to_inventory(what_found, player.loot)
+        if user_input == "\\":
+            exit()
+        elif user_input == "=":
+            save(player.loot, player.map, place, player.level, item_position)
+        elif user_input == "-":
+            player.level += 1
+            create_level() 
+        print(door_pass)
+
+def loaded_game():
+    os.system('clear')
+    load_tuple = load()
+    player.map = load_tuple[0]
+    hero = load_tuple[1]
+    player.row = hero[0]
+    player.column = hero[1]
+    player.level = load_tuple[2]
+    player.loot = load_tuple[3]
+    item_position = load_tuple[4]
+    door_pass = random.randrange(1,4)
+    print(door_pass)
+    print_table(player.map)
+    print('Life:')
+    for heart in range(player.life):
+        cprint('♡', 'green', end=' ')
+    print('')
+    if player.level == 3:
+        player.map = boss(player.map)
+    while True:
+        user_input = getch()
+        move(user_input, door_pass)
+        os.system('clear')
+        print_table(player.map)
         print('Life:')
         for heart in range(player.life):
             cprint('♡', 'green', end=' ')
@@ -170,9 +210,20 @@ def create_level():
             item_position.pop(what)
             player.loot = add_to_inventory(what_found, player.loot) 
         print(door_pass)
+        if user_input == "\\":
+            exit()
+        elif user_input == "=":
+            save(player.loot, player.map, place, player.level, item_position)
+        elif user_input == "-":
+            player.level += 1
+            create_level() 
+        print(door_pass)
 
 def main():
     player.loot = [rope, onion, dagger]
+    rope.amount = 1
+    onion.amount = 1
+    dagger.amount = 1
     start_game.start()
     create_level()
     
