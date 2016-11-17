@@ -1,5 +1,6 @@
 from dun_pati import *
 from inventory import *
+from kamil import *
 
 
 """def drukowanie_tablicy(lista):
