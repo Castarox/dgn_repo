@@ -17,6 +17,8 @@ def start():
 			help()
 		elif command == '4':
 			exit()
+		elif command == '5':
+			load()
 		else:
 			print('Wrong command')
 
@@ -46,3 +48,4 @@ def display_menu():
 	print('Credits press 2')
 	print('Help press 3')
 	print('Quit game press 4')
+	print('Load saved game: 5')
