@@ -146,7 +146,7 @@ def save(loot, boardxy, hero, level, items_position):
         sfile.write('items_position, %s\n' % str(items_position))
         for item in loot:
             sfile.write('%s,%d,%s,%d\n' %(item.name, item.weight, item.st_type, item.amount))
-    with open('save/list.csv', 'w') as name_file:
+    with open('save/list.csv', 'a') as name_file:
         name_file.write('%s\n' % name)
 
     exit()

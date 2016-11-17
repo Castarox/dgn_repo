@@ -8,7 +8,10 @@ from kamil import *
         print(''.join(i))"""
 
 def load():
-    with open('save/pati_save.csv', 'r') as lfile:
+    with open('save/list.csv', 'r') as ll:
+        print(ll.read())
+        name = input("Choose your user: ")
+    with open('save/%s_save.csv' %name, 'r') as lfile:
         boardxy = [row.strip("\n") for row in lfile]
 
     board = []
