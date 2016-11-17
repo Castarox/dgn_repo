@@ -97,7 +97,7 @@ def move(user_input, door_pass):
         elif player.map[player.row + key[user_input][0]][player.column+key[user_input][1]] == '$':
             status = game_or_not(player.row + key[user_input][0], player.column+key[user_input][1], player.map, door_pass, player.level)
     elif user_input == 'l':
-        display_inventory(player.loot)
+        player.life = operate_inventory(player.loot,player.life)
     else:
         exit()
     if status == 'level pass':
