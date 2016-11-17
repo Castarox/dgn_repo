@@ -37,7 +37,7 @@ def hints_dictionary():
         print ("{:<17} {}\n".format(key, hints_dict[key]))
 
 
-def main():
+def main(life):
     print("\nI am thinking of a 3-digit number. You have 10 guesses\033[1m to get it\033[0m.")  # "to get it" is bold.
     print('\nHere are some clues:\n')
     print("When I say:\tThat means:\n")
@@ -52,11 +52,13 @@ def main():
             continue
         win = check_win(user_input, random_number)
         if win is True:
-            print("HOT HOT HOT!\nWell done! Your guess was correct.")
+            print("HOT HOT HOT!\nWell done! Your guess was correct and you deafat boss")
+            return 'Win'
             break
         check(user_input, random_number)
-        if guess_count == 10:
+        if guess_count == life:
             print("\nYOU LOOSE!")
+            return 'Game over'
             break
         guess_count += 1
 
