@@ -1,4 +1,5 @@
 from termcolor import colored
+from dungeon_noclass_tt import loaded_game
 welcome_file = 'welcome.txt'
 credits_file = 'credits.txt'
 help_file = 'help.txt'
@@ -18,7 +19,7 @@ def start():
 		elif command == '4':
 			exit()
 		elif command == '5':
-			load()
+			loaded_game()
 		else:
 			print('Wrong command')
 

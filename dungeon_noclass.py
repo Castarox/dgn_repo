@@ -5,6 +5,7 @@ import start_game
 from dun_pati import *
 from  termcolor import cprint
 from inventory import *
+from loaded import *
 
 def getch():
     """Reads one character without enter"""
@@ -53,7 +54,7 @@ def print_board(board,level = 1):
         for element in row:
             if element == '.':
                 level1(element,level)
-            elif element == 'X':
+            elif element == 'X' or element == 'A' or element == 'I':
                 level2(element, level)
             elif element == '1' or element == '2' or element == '3':
                 level3(element, level)
@@ -82,7 +83,7 @@ def hero_position(position, boardxy):
 
 def move(x, position, boardxy, door_pass, loot, level):
     key = {"w": (-1, 0), "s": (1, 0), "a": (0, -1), "d": (0, 1)}
-    special_character = ['X','1','2','3','$']
+    special_character = ['X','1','2','3','$',"A", "I"]
     doors = ['1','2','3']
     status = ''
     if x in key:
@@ -158,10 +159,55 @@ def create_level(level, loot):
         if user_move == "\\":
             exit()
         elif user_move == "=":
+            save(loot, game_board, hero, level, items_position)
+        elif user_move == "-":
+            level += 1
+            create_level(level, loot)
+
+def loaded_game():
+
+    print('\n\n\n\n\n\n\n\n')
+
+    load_tuple = load()
+    game_board = load_tuple[0]
+    hero = load_tuple[1]
+    level = load_tuple[2]
+    loot = load_tuple[3]
+    items_position = load_tuple[4]
+    door_pass = random.randrange(1,4)
+    print(door_pass)
+    print_board(game_board)
+
+    if level == 3:
+        game_board = boss(game_board)
+
+    while True:
+        os.system('clear')
+        print_board(game_board,level)
+        display_inventory(loot)
+        user_move = getch()
+        hero = move(user_move, hero, game_board, door_pass,loot, level)
+        hero_position(hero, game_board)
+        if hero in items_position:
+            what = items_position.index(hero)
+            found = find_object(what,loot)
+            items_position.pop(what)
+            loot = add_to_inventory(found, loot)
+        if user_move == "\\":
+            exit()
+        elif user_move == "=":
             save(loot, game_board, hero, level)
+        elif user_move == "-":
+            level += 1
+            create_level(level, loot)
+
+
 
 def main ():
     loot = [rope, onion, dagger]
+    rope.amount = 1
+    onion.amount = 1
+    dagger.amount = 1
     level = 1
     start_game.start()
     create_level(level, loot)
