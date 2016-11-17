@@ -130,17 +130,13 @@ def display_inventory(inventory):
     cprint('=' * max_board, 'yellow')
     command = input('Commands: Drop Items [d], switch to game l ')
 
-    # if command == 'd':
-    #
-    # else:
-    #     print('Go go play')
 
 
 def save(loot, boardxy, hero, level, items_position):
     name = input("Enter your name to personalize your save: ")
     import os
     #os.system('touch %d_save.csv' % name)
-    with open('%s_save.csv' % (name), 'w') as sfile:
+    with open('save/%s_save.csv' % (name), 'w') as sfile:
         for line in boardxy:
             for point in line:
                 sfile.write('%s,' %(point))
@@ -150,5 +146,7 @@ def save(loot, boardxy, hero, level, items_position):
         sfile.write('items_position, %s\n' % str(items_position))
         for item in loot:
             sfile.write('%s,%d,%s,%d\n' %(item.name, item.weight, item.st_type, item.amount))
+    with open('save/list.csv', 'w') as name_file:
+        name_file.write('name\n')
 
     exit()
