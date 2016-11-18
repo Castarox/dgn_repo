@@ -1,5 +1,6 @@
 from dun_pati import *
 from kamil import *
+import start_game
 
 
 """def drukowanie_tablicy(lista):
@@ -11,6 +12,8 @@ def load():
     with open('save/list.csv', 'r') as ll:
         print(ll.read())
         name = input("Choose your user: ")
+        if name == "exit" or name == "EXIT":
+            start_game.start()
     with open('save/%s_save.csv' %name, 'r') as lfile:
         boardxy = [row.strip("\n") for row in lfile]
     board = []

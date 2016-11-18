@@ -5,3 +5,19 @@ _________                    .___.__  __
  \______  /|__|    \___  >____ | |__||__| /____  >
         \/             \/     \/               \/
 
+(\__/)      Pati: Levels and creating random obstacles on board
+(>'.'<)           Interaction with inventory items
+(")_(")           Loading and saving
+                  Movement basics
+
+Piotrek:  /\_/\   Coloring
+     ___ / o o \  Dropping and eating items (even hats and goats)
+   /~____  =ø= /  Start board and menu
+  (______)__m_m)  Displaying inventory
+                                         , _ ,
+Kamil:            Code consolidation    ( o o )
+                  Code optimization    /'` ' `'\
+  @..@            Level passing        |'''''''|
+ (\--/)           Mini games           |\\'''//|
+(.>__<.)                                  """
+^^^  ^^^  Edyta:  Hot-cold game             

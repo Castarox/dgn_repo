@@ -31,6 +31,7 @@ def start():
     return save_count
 
 
+
 def welcome():
     """Print Welcome"""
     with open(welcome_file, 'r') as content:
@@ -40,21 +41,19 @@ def welcome():
 
 def credits():
     """Show credits"""
+    os.system('clear')
     with open(credits_file, 'r') as content:
-        text = content.read()
-        print(colored(text, 'green'))
-        print('Peter: Design & Menu')
-        print('')
+	    text = content.read()
+	    print(colored(text, 'green'))
+	    input("Enter - back to menu")
 
+def helpp():
+	os.system('clear')
+	with open(help_file, 'r') as content:
+		text = content.read()
+		print(colored(text, 'green'))
+		input("Enter - back to menu or game")
 
-def help():
-    """Show Help"""
-    with open(help_file, 'r') as content:
-        text = content.read()
-        print(colored(text, 'green'))
-        print('To move hero use W,S,A,D')
-        print('To check invetory press [l], drop item [d],eat item and restore your life [h]')
-        print('')
 
 def win_game():
     """Show screen when you win"""
