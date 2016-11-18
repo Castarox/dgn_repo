@@ -221,7 +221,7 @@ def main():
     '''main function'''
     player.loot = [rope, onion, dagger]
     rope.amount = 1
-    onion.amount = 1
+    onion.amount = 3
     dagger.amount = 1
     save_count = start_game.start()
     create_level(save_count)

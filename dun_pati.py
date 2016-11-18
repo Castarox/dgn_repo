@@ -5,7 +5,7 @@ import os
 
 
 class Stuff():
-''' class contain items can appear on map'''
+    '''class contain items can appear on map'''
     def __init__(self, name, weight, st_type, sign):
         self.name = name
         self.weight = weight
@@ -123,6 +123,7 @@ def display_inventory(inventory,player_life):
         max_board = len(max_key.name)+86
     total_amount = 0
     total_weight = 0
+
     max_length_key = '12'
     print('Your inventory')
     cprint('='*max_board,'yellow')
@@ -145,60 +146,78 @@ def display_inventory(inventory,player_life):
 
 def  drop_item(inventory,player_life):
     '''drop items from inv'''
+    list_length = len(inventory)
     while True:
-        drop = input('Which item you want to drop,enter index of item, x to quit')
+        drop = input('Which item you want to drop,enter index of item, x to quit: ')
         if drop == 'x':
             print('All set check your inventory')
             display_inventory(inventory, player_life)
             return  player_life
-        try:
-            drop_int = int(drop)
-        except:
-            print('You cannot pass string , only [x], please try again')
-            pass
-        if int(drop_int):
-            count = int(input('How many do you want to drop?'))
-            ele = inventory[drop_int-1]
-            print('Ilość poczatkowa',ele.amount)
-            if ele.amount > count and count >= 0:
-                ele.amount -= count
-            elif ele.amount <= count:
-                inventory.pop(drop_int - 1)
-                print('You haven no more {}'.format(ele.name))
+        drop = isNumber(drop)
+
+        if drop and drop <= list_length and drop >=0:
+
+            count = input('How many do you want to drop? ')
+            count = isNumber(count)
+            if count and count >= 0:
+                ele = inventory[drop - 1]
+                if ele.amount > count and count >= 0:
+                    ele.amount -= count
+                elif ele.amount <= count:
+                    inventory.pop(drop - 1)
+                    print('You haven no more {}'.format(ele.name))
+                else:
+                    print('Something went wrong please try again')
+                display_inventory(inventory, player_life)
+                return player_life
             else:
-                print('Something went wrong please try again')
-            display_inventory(inventory, player_life)
-            return player_life
+                print('No letter accepted or - value')
+        else:
+            print('Wrong index or entered letter')
+
+
+
+
+
+def isNumber(number):
+    try:
+        number = int(number)
+        return number
+    except ValueError:
+
+        return False
 
 
 def  life_safer(inventory,player_life):
     ''' switch item to live'''
+    list_length = len(inventory)
     while True:
         eat = input('Which item you want to eat to restore your life!!!')
-        if eat == 'x':
-            break
-        try:
-            eat_int = int(eat)
-        except:
-            print('You cannot pass string , only [x], please try again')
-            pass
-        print('Player Life',player_life)
-        if int(eat_int):
+        eat = isNumber(eat)
+
+        if eat and eat <= list_length and eat >=0:
             count = int(input('How many do you want to eat?'))
-            ele = inventory[eat_int-1]
-            if ele.amount > count and count >= 0:
-                ele.amount -= count
-                player_life_extra = player_life + (count*2)
-                display_inventory(inventory, player_life_extra)
-                return player_life_extra
-            elif ele.amount <= count:
-                inventory.pop(eat_int - 1)
-                print('You haven no more {}'.format(ele.name))
-                player_life_extra = player_life + (ele.amount * 2)
-                display_inventory(inventory,player_life_extra)
-                return player_life_extra
+            count = isNumber(count)
+            if count and count >= 0:
+                ele = inventory[eat-1]
+                if ele.amount > count and count >= 0:
+                    ele.amount -= count
+                    player_life_extra = player_life + count
+                    display_inventory(inventory, player_life_extra)
+                    return player_life_extra
+                elif ele.amount <= count:
+                    inventory.pop(eat - 1)
+                    print('You haven no more {}'.format(ele.name))
+                    player_life_extra = player_life + ele.amount
+                    display_inventory(inventory,player_life_extra)
+                    return player_life_extra
+                else:
+                    print('Something went wrong please try again')
             else:
-                print('Something went wrong please try again')
+                print('No letter accepted or - value')
+
+        else:
+            print('Wrong index or entered letter')
 
 
 def save(loot, boardxy, hero, level, items_position, life):

@@ -1,5 +1,4 @@
 from dun_pati import *
-from inventory import *
 from kamil import *
 
 
