@@ -7,10 +7,13 @@ help_file = 'help.txt'
 
 
 def start():
-	os.system('clear')
+	"""os.system('clear')
 	welcome()
-	display_menu()
+	display_menu()"""
 	while True:
+		os.system('clear')
+		welcome()
+		display_menu()
 		command = input('Enter command :')
 		if command == '1':
 			save_count = 0
@@ -18,7 +21,7 @@ def start():
 		elif command == '2':
 			credits()
 		elif command == '3':
-			help()
+			helpp()
 		elif command == '4':
 			exit()
 		elif command == '5':
@@ -34,18 +37,19 @@ def welcome():
 		print(colored(text,'red'))
 
 def credits():
+	os.system('clear')
 	with open(credits_file, 'r') as content:
 		text = content.read()
 		print(colored(text, 'green'))
-		print('Peter: Design & Menu')
-		print('')
+		input("Enter - back to menu")
 
-def help():
+def helpp():
+	os.system('clear')
 	with open(help_file, 'r') as content:
 		text = content.read()
 		print(colored(text, 'green'))
-		print('To move hero use W,S,A,D')
-		print()
+		input("Enter - back to menu or game")
+		
 
 def win_game():
 	with open('win_game.txt', 'r') as content:

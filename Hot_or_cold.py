@@ -2,12 +2,14 @@ import random
 
 
 def number_generator():
+    '''generate rundom number'''
     number = random.randrange(100, 999)
     number = str(number)
     return number
 
 
 def check_win(user_input, number):
+    '''match random number with user number'''
     if user_input == number:
         return True
     else:
@@ -15,6 +17,7 @@ def check_win(user_input, number):
 
 
 def check(user_input, number):
+    '''print hot cold or warm'''
     counter = 0
     hot = []
     for i in range(len(number)):
@@ -31,6 +34,7 @@ def check(user_input, number):
 
 
 def hints_dictionary():
+    '''print start game clue'''
     print("\nI am thinking of a 3-digit number. You have 10 guesses\033[1m to get it\033[0m.")  # "to get it" is bold.
     print('\nHere are some clues:\n')
     print("When I say:\tThat means:\n")
@@ -40,7 +44,6 @@ def hints_dictionary():
 
     for key in hints_dict:
         print ("{:<17} {}\n".format(key, hints_dict[key]))
-
 
 
 def main(life):

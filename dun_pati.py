@@ -5,7 +5,7 @@ import os
 
 
 class Stuff():
-
+    ''' class contain items can appear on map'''
     def __init__(self, name, weight, st_type, sign):
         self.name = name
         self.weight = weight
@@ -14,6 +14,7 @@ class Stuff():
         self.amount = 3
 
 
+'''creat object of items '''
 onion = Stuff('onion', 2, 'food', 'a')
 carrot = Stuff('carrot', 3, 'food', 'b')
 hat = Stuff('hat', 5, 'clothes', 'c')
@@ -28,7 +29,6 @@ arrow = Stuff('arrow', 5, 'weapon', 'e')
 
 def obstacle(level, board_obst, amount=10, size=8):
     """Prints random obstacles on board"""
-
     if level == 1:
         disper = 7
         yy = 2
@@ -61,17 +61,15 @@ def obstacle(level, board_obst, amount=10, size=8):
         for n in range(2,79):
             for m in range(random.randrange(3, 11, 2)):
                 board_obst[22 - m][n] = "I"
-
     return board_obst
 
 
 def find_object(what, loot):
-    #whole = [onion, carrot, hat, goat, knife, rope, torch, gold, dagger, arrow]
+    '''chech what object was found'''
     whole = [onion, hat]
     found_object = random.choice(whole)
     print("You found %s" % found_object.name)
     return found_object
-
 
 
 def add_to_inventory(item, loot):
@@ -87,7 +85,6 @@ def add_to_inventory(item, loot):
             item.amount = 1
         print("\n***Inventory upgraded***\n")
         print("You have %d %s" %(item.amount, item.name))
-    #totalweight(loot)
     return loot
 
 
@@ -99,21 +96,15 @@ def totalweight(loot):
 
 
 def operate_inventory(inventory, player_life=10):
-
+    ''' mange inventory operations'''
     display_inventory(inventory, player_life)
-
     player_life_value = player_life
-
     while True:
         command = input('Commands: Drop Items [d], switch to game [l],add some health points[h] ')
-
         if command == 'd':
             player_life_value = drop_item(inventory,player_life_value)
-
-
         elif command == 'h':
             player_life_value = life_safer(inventory, player_life_value)
-
         elif command == 'l':
             os.system('clear')
             return player_life_value
@@ -122,7 +113,7 @@ def operate_inventory(inventory, player_life=10):
 
 
 def display_inventory(inventory,player_life):
-
+    ''' show inventory'''
     os.system('clear')
     if not inventory:
         inventory=[]
@@ -130,7 +121,6 @@ def display_inventory(inventory,player_life):
     else:
         max_key = max(inventory, key=attrgetter('name'))
         max_board = len(max_key.name)+86
-
     total_amount = 0
     total_weight = 0
     max_length_key = '12'
@@ -138,7 +128,6 @@ def display_inventory(inventory,player_life):
     cprint('='*max_board,'yellow')
     print('   {:>{length_value}} {:>{length_value}} {:>{length_value}} {:>{length_value}}'.format('Item Name',
         'Weight','Amount','Total weight',length_value='20'))
-
     for i,object in enumerate(inventory,start=1):
         name = object.name
         weight = object.weight
@@ -154,30 +143,23 @@ def display_inventory(inventory,player_life):
     cprint('=' * max_board, 'yellow')
 
 
-
 def  drop_item(inventory,player_life):
-
-
-
+    '''drop items from inv'''
     while True:
         drop = input('Which item you want to drop,enter index of item, x to quit')
-
         if drop == 'x':
             print('All set check your inventory')
             display_inventory(inventory, player_life)
             return  player_life
-
         try:
             drop_int = int(drop)
         except:
             print('You cannot pass string , only [x], please try again')
             pass
-
         if int(drop_int):
             count = int(input('How many do you want to drop?'))
             ele = inventory[drop_int-1]
             print('Ilość poczatkowa',ele.amount)
-
             if ele.amount > count and count >= 0:
                 ele.amount -= count
             elif ele.amount <= count:
@@ -185,31 +167,25 @@ def  drop_item(inventory,player_life):
                 print('You haven no more {}'.format(ele.name))
             else:
                 print('Something went wrong please try again')
-
             display_inventory(inventory, player_life)
             return player_life
 
 
 def  life_safer(inventory,player_life):
-
+    ''' switch item to live'''
     while True:
         eat = input('Which item you want to eat to restore your life!!!')
-
         if eat == 'x':
             break
-
         try:
             eat_int = int(eat)
         except:
             print('You cannot pass string , only [x], please try again')
             pass
-
         print('Player Life',player_life)
-
         if int(eat_int):
             count = int(input('How many do you want to eat?'))
             ele = inventory[eat_int-1]
-
             if ele.amount > count and count >= 0:
                 ele.amount -= count
                 player_life_extra = player_life + (count*2)
@@ -225,8 +201,8 @@ def  life_safer(inventory,player_life):
                 print('Something went wrong please try again')
 
 
-
 def save(loot, boardxy, hero, level, items_position, life):
+    '''save game to file'''
     name = input("Enter your name to personalize your save: ")
     import os
     #os.system('touch %d_save.csv' % name)
@@ -243,5 +219,4 @@ def save(loot, boardxy, hero, level, items_position, life):
             sfile.write('%s,%d,%s,%d\n' %(item.name, item.weight, item.st_type, item.amount))
     with open('save/list.csv', 'a') as name_file:
         name_file.write('%s\n' % name)
-
     exit()

@@ -5,7 +5,9 @@ import time
 import Hot_or_cold
 from start_game import win_game, game_over
 
+
 def doors(row, column, board, level):
+    '''set doors on map'''
     door_number = 1
     if level < 3:
         for i in range(3):
@@ -27,6 +29,7 @@ def doors(row, column, board, level):
 
 
 def game_or_not(row, column, map, door_pass, level):
+    '''start small  games '''
     lista = ['a','b','c','d','e']
     score = ''
     if map[row][column] == str(door_pass) and map[row][column] not in lista:
@@ -42,7 +45,9 @@ def game_or_not(row, column, map, door_pass, level):
             time.sleep(2)
     return score
 
+
 def boss_fight(life):
+    '''finall boss fight'''
     os.system('clear')
     status = Hot_or_cold.main(life)
     if status == 'Win':
@@ -56,7 +61,9 @@ def boss_fight(life):
         time.sleep(3)
         exit()
 
+
 def rock_paper():
+    '''mini game'''
     player_points = 0
     computer_points = 0
     options = ['rock', 'scissors', 'paper']

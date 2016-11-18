@@ -5,7 +5,9 @@ from  termcolor import cprint
 from dun_pati import *
 from loaded import *
 
+
 class user_class:
+    ''' class containe player info'''
     def __init__(self):
         self.row = 1
         self.column = 1
@@ -17,7 +19,9 @@ class user_class:
 
 player = user_class()
 
+
 def getch():
+    '''don't know what do but work'''
     fd = sys.stdin.fileno()
     old_settings = termios.tcgetattr(fd)
     try:
@@ -29,11 +33,12 @@ def getch():
 
 
 def board(x=23, y=80):
-    table = []  
+    '''create bord and frame'''
+    table = []
     for row in range(x):
         table.append([])
         for column in range(y):
-            if row == 0 or row == x-1 or column == 0 or column == y-1: 
+            if row == 0 or row == x-1 or column == 0 or column == y-1:
                 table[row].append('X')
             elif row == player.row and column == player.column:
                 table[row].append('@')
@@ -43,6 +48,7 @@ def board(x=23, y=80):
 
 
 def dot_print(element,level):
+    '''print colored dot'''
     if level == 1:
         print("".join(element), end='')
     elif level == 2:
@@ -52,6 +58,7 @@ def dot_print(element,level):
 
 
 def wall_print(element,level):
+    '''print colored wall'''
     if level == 1:
         cprint("".join(element), 'red', end='')
     elif level == 2:
@@ -61,6 +68,7 @@ def wall_print(element,level):
 
 
 def door_print(element,level):
+    '''print colored doors'''
     if level == 1:
         cprint("".join(element), 'cyan', end='')
     elif level == 2:
@@ -70,11 +78,12 @@ def door_print(element,level):
 
 
 def print_table(table):
+    ''' print table to terminal'''
     for item in table:
         for element in item:
             if element == '.':
                 dot_print(element,player.level)
-            elif element == 'X':
+            elif element == 'X' or element == 'A' or element == 'I':
                 wall_print(element, player.level)
             elif element == '1' or element == '2' or element == '3':
                 door_print(element, player.level)
@@ -82,7 +91,9 @@ def print_table(table):
                 print("".join(element), end='')
         print('')
 
+
 def move(user_input, door_pass):
+    '''user move function'''
     key = {"w": (-1, 0), "s": (1, 0), "a": (0, -1), "d": (0, 1)}
     special_character = ['X', '1', '2', '3', '$', 'A', 'I']
     doors = ['1','2','3']
@@ -99,8 +110,6 @@ def move(user_input, door_pass):
             boss_fight(player.life)
     elif user_input == 'l':
         player.life = operate_inventory(player.loot,player.life)
-
-
     if status == 'level pass':
         player.level += 1
         create_level()
@@ -110,8 +119,10 @@ def move(user_input, door_pass):
         start_game.game_over()
         time.sleep(3)
         exit()
-        
+
+
 def boss(board):
+    '''put boss on map'''
     while True:
         x = random.randrange(1,23)
         y = random.randrange(1,80)
@@ -122,6 +133,7 @@ def boss(board):
 
 
 def random_item():
+    '''random set items on map'''
     i = 0
     count = 1
     item_position = []
@@ -139,6 +151,7 @@ def random_item():
 
 
 def ass_no_save():
+    ''' new game assigment'''
     player.row = 12
     player.column = 1
     player.map = board()
@@ -149,6 +162,7 @@ def ass_no_save():
 
 
 def ass_save():
+    '''save game assigment'''
     load_tuple = load()
     player.map = load_tuple[0]
     hero = load_tuple[1]
@@ -161,8 +175,8 @@ def ass_save():
     return item_position
 
 
-
 def create_level(status_save = 0):
+    '''create game level and map during move'''
     os.system('clear')
     heart = 0
     if status_save == 0:
@@ -199,19 +213,21 @@ def create_level(status_save = 0):
             save(player.loot, player.map, place, player.level, item_position, player.life)
         elif user_input == "-":
             player.level += 1
-            create_level() 
-        print(door_pass)
+            create_level()
+        elif user_input == "h":
+            start_game.helpp()
+        #print(door_pass)
 
 
 def main():
+    '''main function'''
     player.loot = [rope, onion, dagger]
     rope.amount = 1
     onion.amount = 1
     dagger.amount = 1
     save_count = start_game.start()
     create_level(save_count)
-    
-    
-    
+
+
 if __name__=='__main__':
     main()
