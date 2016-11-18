@@ -25,6 +25,7 @@ def start():
             exit()
         elif command == '5':
             save_count = 1
+            os.system('clear')
             break
         else:
             print('Wrong command')
