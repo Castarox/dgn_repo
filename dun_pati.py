@@ -5,7 +5,7 @@ import os
 
 
 class Stuff():
-''' class contain items can appear on map'''
+    ''' class contain items can appear on map'''
     def __init__(self, name, weight, st_type, sign):
         self.name = name
         self.weight = weight
