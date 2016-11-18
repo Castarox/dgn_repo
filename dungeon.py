@@ -216,6 +216,8 @@ def create_level(status_save = 0):
             create_level()
         elif user_input == "h":
             start_game.helpp()
+            print_table(player.map)
+            os.system('clear')
         #print(door_pass)
 
 
