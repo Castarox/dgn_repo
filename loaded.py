@@ -1,15 +1,22 @@
 from dun_pati import *
 from kamil import *
 import start_game
-
+import os
 
 def load():
     '''load from fille and return tuple'''
+    print("Choose your name or 'exit' to back to menu:")
     with open('save/list.csv', 'r') as ll:
         print(ll.read())
         name = input("Choose your user: ")
         if name == "exit" or name == "EXIT":
             start_game.start()
+    while True:
+        try:
+            with open('save/%s_save.csv' %name, 'r') as lfile:
+                boardxy = [row.strip("\n") for row in lfile]
+        except FileNotFoundError:
+            print("Wrong name")
     with open('save/%s_save.csv' %name, 'r') as lfile:
         boardxy = [row.strip("\n") for row in lfile]
     board = []

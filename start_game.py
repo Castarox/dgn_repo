@@ -24,7 +24,7 @@ def start():
         elif command == '4':
             exit()
         elif command == '5':
-            save_count = 1
+            save_count = load()
             os.system('clear')
             break
         else:

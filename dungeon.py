@@ -168,17 +168,17 @@ def ass_no_save():
     return item_position
 
 
-def ass_save():
+def ass_save(status_save):
     '''save game assigment'''
-    load_tuple = load()
-    player.map = load_tuple[0]
-    hero = load_tuple[1]
+    status_save = load()
+    player.map = status_save[0]
+    hero = status_save[1]
     player.row = hero[0]
     player.column = hero[1]
-    player.level = load_tuple[2]
-    player.loot = load_tuple[3]
-    item_position = load_tuple[4]
-    player.life = load_tuple[5]
+    player.level = status_save[2]
+    player.loot = status_save[3]
+    item_position = status_save[4]
+    player.life = status_save[5]
     return item_position
 
 
@@ -189,7 +189,7 @@ def create_level(status_save = 0):
     if status_save == 0:
         item_position = ass_no_save()
     else:
-        item_position = ass_save()
+        item_position = ass_save(status_save)
     door_pass = random.randrange(1,4)
     if player.level == 3:
         player.map = boss(player.map)
@@ -226,7 +226,11 @@ def main():
     onion.amount = 3
     dagger.amount = 1
     save_count = start_game.start()
-    create_level(save_count)
+    print(save_count != 0)
+    if save_count != 0:
+        create_level(save_count)
+    else:
+        create_level()
 
 
 if __name__=='__main__':
