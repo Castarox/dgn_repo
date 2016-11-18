@@ -216,14 +216,14 @@ def create_level(status_save = 0):
         if user_input == "=":
             print(user_input)
             save(player.loot, player.map, place, player.level, item_position, player.life)
-        #print(door_pass)
+        print(door_pass)
 
 
 def main():
     '''main function'''
     player.loot = [rope, onion, dagger]
     rope.amount = 1
-    onion.amount = 1
+    onion.amount = 3
     dagger.amount = 1
     save_count = start_game.start()
     create_level(save_count)

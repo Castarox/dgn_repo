@@ -4,8 +4,15 @@ from termcolor import cprint
 
 def number_generator():
     '''generate rundom number'''
-    number = random.randrange(100, 999)
-    number = str(number)
+    numer_list = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    a = random.choice(numer_list)
+    numer_list.remove(a)
+    b = random.choice(numer_list)
+    numer_list.remove(b)
+    c = random.choice(numer_list)
+    numer_list.remove(c)
+    number = '%s%s%s'%(a, b, c)
+    print(number)
     return number
 
 
