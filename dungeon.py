@@ -34,11 +34,11 @@ def getch():
 
 def board(x=23, y=80):
     '''create bord and frame'''
-    table = []  
+    table = []
     for row in range(x):
         table.append([])
         for column in range(y):
-            if row == 0 or row == x-1 or column == 0 or column == y-1: 
+            if row == 0 or row == x-1 or column == 0 or column == y-1:
                 table[row].append('X')
             elif row == player.row and column == player.column:
                 table[row].append('@')
@@ -83,7 +83,7 @@ def print_table(table):
         for element in item:
             if element == '.':
                 dot_print(element,player.level)
-            elif element == 'X':
+            elif element == 'X' or element == 'A' or element == 'I':
                 wall_print(element, player.level)
             elif element == '1' or element == '2' or element == '3':
                 door_print(element, player.level)
@@ -110,6 +110,13 @@ def move(user_input, door_pass):
             boss_fight(player.life)
     elif user_input == 'l':
         player.life = operate_inventory(player.loot,player.life)
+    if user_input == "\\":
+            exit()
+    elif user_input == "-":
+        player.level += 1
+        create_level()
+    elif user_input == "h":
+        start_game.helpp()
     if status == 'level pass':
         player.level += 1
         create_level()
@@ -206,15 +213,10 @@ def create_level(status_save = 0):
             what_found = find_object(what, player.loot)
             item_position.pop(what)
             player.loot = add_to_inventory(what_found, player.loot)
-        if user_input == "\\":
-            exit()
-        elif user_input == "=":
+        if user_input == "=":
             print(user_input)
             save(player.loot, player.map, place, player.level, item_position, player.life)
-        elif user_input == "-":
-            player.level += 1
-            create_level() 
-        print(door_pass)
+        #print(door_pass)
 
 
 def main():
@@ -225,7 +227,7 @@ def main():
     dagger.amount = 1
     save_count = start_game.start()
     create_level(save_count)
-    
-      
+
+
 if __name__=='__main__':
     main()

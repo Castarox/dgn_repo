@@ -1,4 +1,5 @@
 import random
+from termcolor import cprint
 
 
 def number_generator():
@@ -46,12 +47,21 @@ def hints_dictionary():
         print ("{:<17} {}\n".format(key, hints_dict[key]))
 
 
-def main(life):
+def print_boos():
+    color_table =['red', 'yellow', 'blue', 'green', 'magenta', 'cyan']
+    random_color = random.randrange(0,6)
+    random_color = color_table[random_color]
+    with open('boss.txt', 'r') as content:
+        text = content.read()
+        cprint(text, random_color)
+
+def main(life = 10):
     hints_dictionary()
     random_number = number_generator()
     print(random_number)
     guess_count = 1
     while True:
+        print_boos()
         user_input = input("\n\nGuess #%d: \n" % (guess_count))
         if len(user_input) != 3 or not user_input.isdigit():
             print("Wrong input!")

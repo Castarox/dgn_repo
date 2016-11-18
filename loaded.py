@@ -1,10 +1,7 @@
 from dun_pati import *
 from kamil import *
+import start_game
 
-
-"""def drukowanie_tablicy(lista):
-    for i in lista:
-        print(''.join(i))"""
 
 def load():
     '''load from fille and return tuple'''

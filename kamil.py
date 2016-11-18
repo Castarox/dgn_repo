@@ -12,7 +12,7 @@ def doors(row, column, board, level):
     if level < 3:
         for i in range(3):
             x = random.randrange(1,5)
-            if x == 1:
+            if x == 1: 
                 position = random.randrange(1,column-1)
                 board[0][position] = str(door_number)
             elif x == 2:
